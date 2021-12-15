@@ -9,7 +9,7 @@ class Wallet {
     required this.currency,
   });
 
-  //function of adding the amount to the wallet
+  //function of adding the amount to the wallet.
   void addAmount(double amount) {
     if (amount > 0) {
       this.amount += amount;
