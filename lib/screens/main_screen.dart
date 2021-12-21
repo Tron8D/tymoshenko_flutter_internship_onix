@@ -15,9 +15,20 @@ class MainScreenState extends State<MainScreen> {
     TextToUpdate(key: textToUpdateGlobalKey,),
     Container(),
   ];
+  final List<String> _titleList = [
+    'Converter',
+    'Currencies',
+  ];
   final List<BottomNavigationBarItem> _items = [
     const BottomNavigationBarItem(icon: Icon(Icons.calculate), label: 'Converter',),
     const BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: 'Currencies',),
+  ];
+  final List<Widget> _actionAtScreenList =[
+    IconButton(
+      icon: const Icon(Icons.refresh),
+      onPressed: () => textToUpdateGlobalKey.currentState?.updateText(DateTime.now().toString()),
+    ),
+    Container(),
   ];
 
   //change index on bottom navigation bar.
@@ -34,13 +45,10 @@ class MainScreenState extends State<MainScreen> {
         child: _screenList[_selectedIndex],
       ),
       appBar: AppBar(
-        title: const Text('Update'),
+        title: Text(_titleList[_selectedIndex]),
         centerTitle: true,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => textToUpdateGlobalKey.currentState?.updateText(DateTime.now().toString()),
-          ),
+          _actionAtScreenList[_selectedIndex],
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
