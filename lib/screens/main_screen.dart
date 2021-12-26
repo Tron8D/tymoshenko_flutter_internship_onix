@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../text_to_update.dart';
 import '../main.dart';
+import '../text_to_update.dart';
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
   @override
   MainScreenState createState() => MainScreenState();
 }
@@ -12,7 +14,9 @@ class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screenList = [
-    TextToUpdate(key: textToUpdateGlobalKey,),
+    TextToUpdate(
+      key: textToUpdateGlobalKey,
+    ),
     Container(),
   ];
   final List<String> _titleList = [
@@ -20,19 +24,26 @@ class MainScreenState extends State<MainScreen> {
     'Currencies',
   ];
   final List<BottomNavigationBarItem> _items = [
-    const BottomNavigationBarItem(icon: Icon(Icons.calculate), label: 'Converter',),
-    const BottomNavigationBarItem(icon: Icon(Icons.attach_money), label: 'Currencies',),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.calculate),
+      label: 'Converter',
+    ),
+    const BottomNavigationBarItem(
+      icon: Icon(Icons.attach_money),
+      label: 'Currencies',
+    ),
   ];
-  final List<Widget> _actionAtScreenList =[
+  final List<Widget> _actionAtScreenList = [
     IconButton(
       icon: const Icon(Icons.refresh),
-      onPressed: () => textToUpdateGlobalKey.currentState?.updateText(DateTime.now().toString()),
+      onPressed: () => textToUpdateGlobalKey.currentState
+          ?.updateText(DateTime.now().toString()),
     ),
     Container(),
   ];
 
   //change index on bottom navigation bar.
-  void changeIndex(int _newIndex){
+  void changeIndex(int _newIndex) {
     setState(() {
       _selectedIndex = _newIndex;
     });
