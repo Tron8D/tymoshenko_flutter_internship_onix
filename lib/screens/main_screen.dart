@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_intership_onix/buttons/download_button.dart';
 import 'package:flutter_intership_onix/fields/phone_number_field.dart';
-import 'package:flutter_intership_onix/fields/search_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -38,15 +37,8 @@ class MainScreenState extends State<MainScreen> {
         left: 5,
         right: 5,
       ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            SearchBar(),
-            SizedBox(height: 20),
-            PhoneNumberField(),
-          ],
-        ),
+      child: const Center(
+        child: PhoneNumberField(),
       ),
     ),
     const DownloadButton(),

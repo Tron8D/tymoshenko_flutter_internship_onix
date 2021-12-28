@@ -26,7 +26,7 @@ class DownloadButton extends StatelessWidget {
           ],
         ),
         style: ButtonStyle(
-          elevation: MaterialStateProperty.all(30),
+          elevation: MaterialStateProperty.all(20),
           shadowColor: MaterialStateProperty.all(Colors.lightGreen),
           backgroundColor: MaterialStateProperty.all(Colors.lightGreen),
           shape: MaterialStateProperty.all(

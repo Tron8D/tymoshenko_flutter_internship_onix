@@ -11,7 +11,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 100),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextField(
         decoration: InputDecoration(
           icon: const Icon(
@@ -24,9 +24,9 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
           fillColor: Colors.white,
           prefixIcon: const Icon(Icons.phone),
           prefixText: '+380',
-          prefixStyle: const TextStyle(color: Colors.black),
+          prefixStyle: const TextStyle(color: Colors.black, fontSize: 16),
           suffixIcon: Padding(
-            padding: const EdgeInsets.only(right: 15),
+            padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               onPressed: () {},
               icon: const Icon(Icons.add),
@@ -34,6 +34,7 @@ class _PhoneNumberFieldState extends State<PhoneNumberField> {
             ),
           ),
           helperText: 'Enter the phone number to add to your contact list.',
+          helperMaxLines: 2,
           enabledBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(50)),
             borderSide: BorderSide(
