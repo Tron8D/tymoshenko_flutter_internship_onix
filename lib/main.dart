@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'screens/main_screen.dart';
-import 'text_to_update.dart';
+// import 'text_to_update.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-final GlobalKey<TextToUpdateState> textToUpdateGlobalKey =
-    GlobalKey<TextToUpdateState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -17,10 +14,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter lesson 2',
+      title: 'Flutter lesson 3',
       debugShowCheckedModeBanner: true,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.blue,
       ),
       home: const MainScreen(),
     );

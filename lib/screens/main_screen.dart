@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/search_bar.dart';
+import '../search_bar.dart';
 
-import '../main.dart';
-import '../text_to_update.dart';
+// import '../main.dart';
+// import '../text_to_update.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -14,10 +16,56 @@ class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screenList = [
-    TextToUpdate(
-      key: textToUpdateGlobalKey,
+    Container(
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        border: Border.all(
+          width: 2,
+          color: Colors.black87,
+        ),
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black87,
+            blurRadius: 15,
+            offset: Offset(0, 10),
+          ),
+        ],
+      ),
+      height: 250,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+      ),
+      margin: const EdgeInsets.only(
+        left: 5,
+        right: 5,
+      ),
+      child: const Center(
+        child: SearchBar(),
+      ),
     ),
-    Container(),
+    OutlinedButton(
+      onPressed: () {},
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(Icons.upload),
+            Text(
+              'Upload',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
   ];
   final List<String> _titleList = [
     'Converter',
@@ -32,14 +80,6 @@ class MainScreenState extends State<MainScreen> {
       icon: Icon(Icons.attach_money),
       label: 'Currencies',
     ),
-  ];
-  final List<Widget> _actionAtScreenList = [
-    IconButton(
-      icon: const Icon(Icons.refresh),
-      onPressed: () => textToUpdateGlobalKey.currentState
-          ?.updateText(DateTime.now().toString()),
-    ),
-    Container(),
   ];
 
   //change index on bottom navigation bar.
@@ -58,9 +98,6 @@ class MainScreenState extends State<MainScreen> {
       appBar: AppBar(
         title: Text(_titleList[_selectedIndex]),
         centerTitle: true,
-        actions: [
-          _actionAtScreenList[_selectedIndex],
-        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: _items,
