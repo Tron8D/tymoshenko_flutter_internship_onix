@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'screens/main_screen.dart';
-// import 'text_to_update.dart';
 
 void main() {
   runApp(const MyApp());

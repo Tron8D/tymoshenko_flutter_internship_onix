@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/search_bar.dart';
-import '../search_bar.dart';
-
-// import '../main.dart';
-// import '../text_to_update.dart';
+import 'package:flutter_intership_onix/buttons/download_button.dart';
+import 'package:flutter_intership_onix/fields/phone_number_field.dart';
+import 'package:flutter_intership_onix/fields/search_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -18,7 +16,7 @@ class MainScreenState extends State<MainScreen> {
   final List<Widget> _screenList = [
     Container(
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.grey[300],
         border: Border.all(
           width: 2,
           color: Colors.black87,
@@ -40,32 +38,18 @@ class MainScreenState extends State<MainScreen> {
         left: 5,
         right: 5,
       ),
-      child: const Center(
-        child: SearchBar(),
-      ),
-    ),
-    OutlinedButton(
-      onPressed: () {},
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.red,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Row(
+      child: Center(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Icon(Icons.upload),
-            Text(
-              'Upload',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-              ),
-            ),
+            SearchBar(),
+            SizedBox(height: 20),
+            PhoneNumberField(),
           ],
         ),
       ),
     ),
+    const DownloadButton(),
   ];
   final List<String> _titleList = [
     'Converter',

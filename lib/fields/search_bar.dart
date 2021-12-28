@@ -42,6 +42,7 @@ class _SearchBarState extends State<SearchBar> {
           suffixIcon: FloatingActionButton(
             onPressed: () {},
             backgroundColor: Colors.black87,
+            splashColor: Colors.blue,
             child: const Icon(
               Icons.search,
             ),
