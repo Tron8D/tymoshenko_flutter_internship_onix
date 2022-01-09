@@ -13,8 +13,8 @@ class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screenList = [
-    ConverterScreen(),
-    CurrenciesScreen(),
+    const ConverterScreen(),
+    const CurrenciesScreen(),
   ];
   final List<String> _titleList = [
     'Converter',
@@ -45,10 +45,15 @@ class MainScreenState extends State<MainScreen> {
         child: _screenList[_selectedIndex],
       ),
       appBar: AppBar(
-        title: Text(_titleList[_selectedIndex]),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          _titleList[_selectedIndex],
+          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+        ),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).secondaryHeaderColor,
         items: _items,
         currentIndex: _selectedIndex,
         onTap: changeIndex,
