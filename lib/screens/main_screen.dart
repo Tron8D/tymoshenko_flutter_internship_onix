@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/buttons/download_button.dart';
-import 'package:flutter_intership_onix/fields/phone_number_field.dart';
+import 'package:flutter_intership_onix/screens/converter_screen.dart';
+import 'package:flutter_intership_onix/screens/currencies_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -13,35 +13,8 @@ class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screenList = [
-    Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        border: Border.all(
-          width: 2,
-          color: Colors.black87,
-        ),
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black87,
-            blurRadius: 15,
-            offset: Offset(0, 10),
-          ),
-        ],
-      ),
-      height: 250,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-      ),
-      margin: const EdgeInsets.only(
-        left: 5,
-        right: 5,
-      ),
-      child: const Center(
-        child: PhoneNumberField(),
-      ),
-    ),
-    const DownloadButton(),
+    const ConverterScreen(),
+    const CurrenciesScreen(),
   ];
   final List<String> _titleList = [
     'Converter',
@@ -72,10 +45,15 @@ class MainScreenState extends State<MainScreen> {
         child: _screenList[_selectedIndex],
       ),
       appBar: AppBar(
-        title: Text(_titleList[_selectedIndex]),
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          _titleList[_selectedIndex],
+          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+        ),
         centerTitle: true,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).secondaryHeaderColor,
         items: _items,
         currentIndex: _selectedIndex,
         onTap: changeIndex,

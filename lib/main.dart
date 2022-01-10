@@ -13,10 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter lesson 3',
-      debugShowCheckedModeBanner: true,
+      title: 'Flutter lesson 4',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.blue,
+        primaryColor: const Color(0xffEBEFF7),
+        secondaryHeaderColor: const Color(0xff4D3DAD),
+        scaffoldBackgroundColor: const Color(0xffDDE2F9),
+        cardColor: const Color(0xffEBEFF7),
       ),
       home: const MainScreen(),
     );
