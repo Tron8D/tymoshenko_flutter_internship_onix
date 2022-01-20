@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/routes.dart';
+import 'package:flutter_intership_onix/user_settings.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'screens/main_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
+UserSettings userSettings = UserSettings();
+
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter lesson 4',
+      title: 'Flutter lesson 5',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: const Color(0xffEBEFF7),
-        secondaryHeaderColor: const Color(0xff4D3DAD),
-        scaffoldBackgroundColor: const Color(0xffDDE2F9),
-        cardColor: const Color(0xffEBEFF7),
-      ),
-      home: const MainScreen(),
+      theme:
+          userSettings.light ? userSettings.lightTheme : userSettings.darkTheme,
+      initialRoute: "/",
+      routes: routes,
+      // home: const MainScreen(),
     );
   }
 }
