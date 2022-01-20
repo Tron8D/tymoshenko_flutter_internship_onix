@@ -61,6 +61,7 @@ class MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('build main');
     return Scaffold(
       body: Center(
         child: _screenList[_selectedIndex],
@@ -75,17 +76,26 @@ class MainScreenState extends State<MainScreen> {
         actions: [
           IconButton(
               onPressed: () async {
-                userSettings.light = await Navigator.pushNamed(
-                        context, '/settings',
-                        arguments: userSettings.light)
-                    .then((valuel) {
-                  setState(() {});
-                }) as bool;
+                Future<Object?> result = Navigator.pushNamed(
+                        context, '/settings', arguments: userSettings.light)
+                    as Future<Object?>;
+                result
+                    .then((value) => userSettings.light = value as bool)
+                    .then((value) => setState(() {
+                          print(userSettings.light);
+                        }));
               },
               icon: Icon(
                 Icons.settings,
                 color: Theme.of(context).secondaryHeaderColor,
-              ))
+              )),
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  print('apd ${userSettings.light}');
+                });
+              },
+              icon: Icon(Icons.refresh))
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

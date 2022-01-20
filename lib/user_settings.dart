@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class UserSettings {
   bool light;
-  UserSettings({this.light = false});
+  UserSettings({this.light = true});
 
   ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,

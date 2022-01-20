@@ -18,6 +18,7 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('build curren');
     return ListView.separated(
       padding: const EdgeInsets.all(20),
       itemBuilder: (context, index) {
