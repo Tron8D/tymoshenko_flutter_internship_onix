@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/screens/converter_screen.dart';
-import 'package:flutter_intership_onix/screens/currencies_screen.dart';
-import 'package:flutter_intership_onix/screens/settings_screen.dart';
-import 'package:flutter_intership_onix/main.dart';
 import 'package:flutter_svg/svg.dart';
+
+import '../main.dart';
+import '../screens/converter_screen.dart';
+import '../screens/currencies_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -61,48 +61,45 @@ class MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print('build main');
-    return Scaffold(
-      body: Center(
-        child: _screenList[_selectedIndex],
-      ),
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        title: Text(
-          _titleList[_selectedIndex],
-          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme:
+          userSettings.dark ? userSettings.darkTheme : userSettings.lightTheme,
+      home: Scaffold(
+        body: Center(
+          child: _screenList[_selectedIndex],
         ),
-        centerTitle: true,
-        actions: [
-          IconButton(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).primaryColor,
+          title: Text(
+            _titleList[_selectedIndex],
+            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
               onPressed: () async {
-                Future<Object?> result = Navigator.pushNamed(
-                        context, '/settings', arguments: userSettings.light)
-                    as Future<Object?>;
+                Future<dynamic> result = Navigator.pushNamed(
+                    context, '/settings',
+                    arguments: userSettings.dark);
                 result
-                    .then((value) => userSettings.light = value as bool)
-                    .then((value) => setState(() {
-                          print(userSettings.light);
-                        }));
+                    .then((value) => userSettings.dark = value as bool)
+                    .then((value) => setState(() {}));
               },
-              icon: Icon(
-                Icons.settings,
+              icon: SvgPicture.asset(
+                'assets/icons/settings.svg',
+                // height: 10,
                 color: Theme.of(context).secondaryHeaderColor,
-              )),
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  print('apd ${userSettings.light}');
-                });
-              },
-              icon: Icon(Icons.refresh))
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).secondaryHeaderColor,
-        items: _items,
-        currentIndex: _selectedIndex,
-        onTap: changeIndex,
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          selectedItemColor: Theme.of(context).secondaryHeaderColor,
+          items: _items,
+          currentIndex: _selectedIndex,
+          onTap: changeIndex,
+        ),
       ),
     );
   }

@@ -3,13 +3,13 @@ import 'package:flutter_intership_onix/routes.dart';
 import 'package:flutter_intership_onix/user_settings.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 UserSettings userSettings = UserSettings();
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter lesson 5',
       debugShowCheckedModeBanner: false,
       theme:
-          userSettings.light ? userSettings.lightTheme : userSettings.darkTheme,
+          userSettings.dark ? userSettings.darkTheme : userSettings.lightTheme,
       initialRoute: "/",
       routes: routes,
     );

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/main.dart';
+
+import '../main.dart';
 
 class SettingsScreen extends StatefulWidget {
-  bool _darkTheme = userSettings.light;
+  bool _darkTheme = userSettings.dark;
   SettingsScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,19 +14,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   late bool _light;
   @override
   Widget build(BuildContext context) {
-    print('build settings');
-    _light = (ModalRoute.of(context)?.settings.arguments as bool) as bool;
-    print('build $_light');
+    _light = (ModalRoute.of(context)?.settings.arguments as bool);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text('Settings'),
+        title: Text(
+          'Settings',
+          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.done),
+            icon: const Icon(Icons.done),
             onPressed: () {
               _light = widget._darkTheme;
-              print('widget.darkTheme $_light');
               Navigator.pop(context, widget._darkTheme);
             },
           ),
@@ -33,11 +34,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: Center(
         child: CheckboxListTile(
-          title: Text("Dark theme"),
+          activeColor: Theme.of(context).secondaryHeaderColor,
+          title: const Text("Dark theme"),
           value: widget._darkTheme,
           onChanged: (value) {
             setState(() {
-              print("!!!");
               widget._darkTheme = value!;
             });
           },
