@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'screens/main_screen.dart';
+import 'package:flutter_intership_onix/routes.dart';
+import 'package:flutter_intership_onix/user_settings.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+UserSettings userSettings = UserSettings();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -13,15 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter lesson 4',
+      title: 'Flutter lesson 5',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: const Color(0xffEBEFF7),
-        secondaryHeaderColor: const Color(0xff4D3DAD),
-        scaffoldBackgroundColor: const Color(0xffDDE2F9),
-        cardColor: const Color(0xffEBEFF7),
-      ),
-      home: const MainScreen(),
+      theme:
+          userSettings.dark ? userSettings.darkTheme : userSettings.lightTheme,
+      initialRoute: "/",
+      routes: routes,
     );
   }
 }
