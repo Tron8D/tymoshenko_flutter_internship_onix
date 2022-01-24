@@ -11,22 +11,21 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late bool _light;
   @override
   Widget build(BuildContext context) {
-    _light = (ModalRoute.of(context)?.settings.arguments as bool);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: userSettings.isPrimaryColor(),
         title: Text(
           'Settings',
-          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+          style: TextStyle(
+            color: userSettings.isSecondaryHeaderColor(),
+          ),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.done),
             onPressed: () {
-              _light = widget._darkTheme;
               Navigator.pop(context, widget._darkTheme);
             },
           ),
@@ -34,7 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: Center(
         child: CheckboxListTile(
-          activeColor: Theme.of(context).secondaryHeaderColor,
+          activeColor: userSettings.isSecondaryHeaderColor(),
           title: const Text("Dark theme"),
           value: widget._darkTheme,
           onChanged: (value) {

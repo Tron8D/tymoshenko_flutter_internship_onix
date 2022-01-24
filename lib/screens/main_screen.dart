@@ -19,6 +19,7 @@ class MainScreenState extends State<MainScreen> {
     const ConverterScreen(),
     const CurrenciesScreen(),
   ];
+
   final List<String> _titleList = [
     'Converter',
     'Currencies',
@@ -63,17 +64,16 @@ class MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme:
-          userSettings.dark ? userSettings.darkTheme : userSettings.lightTheme,
+      theme: userSettings.isDark(),
       home: Scaffold(
         body: Center(
           child: _screenList[_selectedIndex],
         ),
         appBar: AppBar(
-          backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: userSettings.isPrimaryColor(),
           title: Text(
             _titleList[_selectedIndex],
-            style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+            style: TextStyle(color: userSettings.isSecondaryHeaderColor()),
           ),
           centerTitle: true,
           actions: [
@@ -83,19 +83,19 @@ class MainScreenState extends State<MainScreen> {
                     context, '/settings',
                     arguments: userSettings.dark);
                 result
-                    .then((value) => userSettings.dark = value as bool)
+                    .then((value) => userSettings.dark = value)
                     .then((value) => setState(() {}));
               },
               icon: SvgPicture.asset(
                 'assets/icons/settings.svg',
                 // height: 10,
-                color: Theme.of(context).secondaryHeaderColor,
+                color: userSettings.isSecondaryHeaderColor(),
               ),
             ),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Theme.of(context).secondaryHeaderColor,
+          selectedItemColor: userSettings.isSecondaryHeaderColor(),
           items: _items,
           currentIndex: _selectedIndex,
           onTap: changeIndex,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/routes.dart';
-import 'package:flutter_intership_onix/user_settings.dart';
+
+import '../routes.dart';
+import '../user_settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter lesson 5',
+      title: 'Flutter lesson 6',
       debugShowCheckedModeBanner: false,
-      theme:
-          userSettings.dark ? userSettings.darkTheme : userSettings.lightTheme,
+      theme: userSettings.isDark(),
       initialRoute: "/",
       routes: routes,
     );

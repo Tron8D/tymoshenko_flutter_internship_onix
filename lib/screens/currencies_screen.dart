@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/data/repository/currencies_repository.dart';
+import 'package:flutter_intership_onix/main.dart';
+import '../data/models/currency.dart';
 
-import '../currencies.dart';
 import '../tiles/currency_list_tile.dart';
 
 class CurrenciesScreen extends StatefulWidget {
@@ -11,25 +13,35 @@ class CurrenciesScreen extends StatefulWidget {
 }
 
 class _CurrenciesScreenState extends State<CurrenciesScreen> {
-  List currencyList = [
-    CurrencyListTile(currency: usd),
-    CurrencyListTile(currency: eur),
-    CurrencyListTile(currency: uan),
-  ];
+  final _currenciesRepository = CurrenciesRepository();
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.all(20),
-      itemBuilder: (context, index) {
-        return currencyList[index];
-      },
-      separatorBuilder: (context, index) {
-        return Divider(
-          color: Theme.of(context).secondaryHeaderColor,
-        );
-      },
-      itemCount: 3,
-    );
+    if (_currenciesRepository.currenciesList.isEmpty) {
+      _currenciesRepository.streamSimulation();
+    }
+    return StreamBuilder<Currency>(
+        stream: _currenciesRepository.currenciesStream(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            _currenciesRepository.currenciesList.add(snapshot.data as Currency);
+            return ListView.separated(
+              padding: const EdgeInsets.all(20),
+              itemBuilder: (context, index) {
+                return CurrencyListTile(
+                    currency: _currenciesRepository.currenciesList[index]);
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  color: userSettings.isSecondaryHeaderColor(),
+                );
+              },
+              itemCount: _currenciesRepository.currenciesList.length,
+            );
+          } else {
+            const Text('List empty');
+          }
+          return const CircularProgressIndicator();
+        });
   }
 }

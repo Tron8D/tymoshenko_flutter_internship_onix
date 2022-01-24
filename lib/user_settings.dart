@@ -22,4 +22,12 @@ class UserSettings {
     cardColor: const Color(0xffb5b8bf),
     fontFamily: GoogleFonts.montserrat().fontFamily,
   );
+
+  ThemeData isDark() => dark ? darkTheme : lightTheme;
+
+  Color isPrimaryColor() =>
+      dark ? darkTheme.primaryColor : lightTheme.primaryColor;
+
+  Color isSecondaryHeaderColor() =>
+      dark ? darkTheme.secondaryHeaderColor : lightTheme.secondaryHeaderColor;
 }
