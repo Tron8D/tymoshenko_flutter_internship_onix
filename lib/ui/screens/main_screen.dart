@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../main.dart';
-import '../screens/converter_screen.dart';
-import '../screens/currencies_screen.dart';
+import '/main.dart';
+import 'converter_screen.dart';
+import 'currencies_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

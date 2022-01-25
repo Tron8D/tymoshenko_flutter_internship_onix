@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../data/models/currency.dart';
+import '/data/models/currency.dart';
 
 class CurrencyListTile extends StatelessWidget {
   final Currency currency;

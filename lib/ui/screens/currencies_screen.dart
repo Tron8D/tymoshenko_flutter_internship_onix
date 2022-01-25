@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/data/repository/currencies_repository.dart';
-import 'package:flutter_intership_onix/main.dart';
-import '../data/models/currency.dart';
 
-import '../tiles/currency_list_tile.dart';
+import '/data/repository/currencies_repository.dart';
+import '/main.dart';
+import '/data/models/currency.dart';
+
+import '../widgets/currency_list_tile.dart';
 
 class CurrenciesScreen extends StatefulWidget {
   const CurrenciesScreen({Key? key}) : super(key: key);

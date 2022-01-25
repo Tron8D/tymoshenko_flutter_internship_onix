@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/data/models/currency.dart';
-import 'package:flutter_intership_onix/fields/currency_form_field.dart';
-import 'package:flutter_intership_onix/tiles/currency_list_tile.dart';
+
+import '/data/models/currency.dart';
+
+import 'currency_list_tile.dart';
+import 'fields/currency_form_field.dart';
 
 class CurrencyCard extends StatelessWidget {
   final Currency currency;

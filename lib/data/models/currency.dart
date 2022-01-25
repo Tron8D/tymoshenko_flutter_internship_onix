@@ -1,5 +1,6 @@
 //base class for currency.
 class Currency {
+  final int id;
   final String name;
   final String fullName;
   final String symbol;
@@ -7,6 +8,7 @@ class Currency {
   final String countryCode;
 
   Currency({
+    required this.id,
     required this.name,
     required this.fullName,
     required this.symbol,

@@ -1,6 +1,7 @@
-import 'data/models/currency.dart';
+import '../models/currency.dart';
 
 Currency usd = Currency(
+  id: 0,
   name: 'USD',
   fullName: 'American Dollar',
   symbol: '\$',
@@ -8,6 +9,7 @@ Currency usd = Currency(
   countryCode: 'us',
 );
 Currency eur = Currency(
+  id: 1,
   name: 'EUR',
   fullName: 'Euro',
   symbol: '€',
@@ -15,6 +17,7 @@ Currency eur = Currency(
   countryCode: 'eu',
 );
 Currency uan = Currency(
+  id: 2,
   name: 'UAN',
   fullName: 'Hryvnia',
   symbol: '₴',

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../buttons/converter_button.dart';
-import '../buttons/switch_button.dart';
-import '../currencies.dart';
-import '../currency_card.dart';
+import '/data/source/currencies.dart';
+import '../widgets/buttons/converter_button.dart';
+import '../widgets/buttons/switch_button.dart';
+import '../widgets/currency_card.dart';
 
 class ConverterScreen extends StatefulWidget {
   const ConverterScreen({Key? key}) : super(key: key);

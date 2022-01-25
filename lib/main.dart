@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../routes.dart';
-import '../user_settings.dart';
+import 'data/source/user_settings.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
+//create user app settings
 UserSettings userSettings = UserSettings();
 
 class MyApp extends StatelessWidget {

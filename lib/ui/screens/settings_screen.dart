@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '/main.dart';
 
 class SettingsScreen extends StatefulWidget {
   bool _darkTheme = userSettings.dark;
