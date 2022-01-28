@@ -18,8 +18,8 @@ class MainScreenState extends State<MainScreen> {
   final List<Widget> _screenList = [
     const ConverterScreen(),
     CurrenciesScreen(
-      onTap: () {},
-    ),
+        // onTap: () {},
+        ),
   ];
 
   final List<BottomNavigationBarItem> _items = [

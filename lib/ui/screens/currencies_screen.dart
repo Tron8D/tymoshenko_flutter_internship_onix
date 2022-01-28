@@ -5,8 +5,11 @@ import 'package:flutter_intership_onix/ui/widgets/stream_builders/currency_list_
 import '/main.dart';
 
 class CurrenciesScreen extends StatefulWidget {
-  GestureTapCallback onTap;
-  CurrenciesScreen({Key? key, required this.onTap}) : super(key: key);
+  // GestureTapCallback onTap;
+  CurrenciesScreen({
+    Key? key,
+    // required this.onTap,
+  }) : super(key: key);
 
   @override
   State<CurrenciesScreen> createState() => CurrenciesScreenState();

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 
 import '/data/models/currency.dart';
-
 import 'currency_list_tile.dart';
 import 'fields/currency_form_field.dart';
 
 class CurrencyCard extends StatelessWidget {
   Currency currency;
   final bool readOnly;
+  // final void Function() onTap;
 
-  CurrencyCard({Key? key, required this.currency, required this.readOnly})
-      : super(key: key);
+  CurrencyCard({
+    Key? key,
+    required this.currency,
+    required this.readOnly,
+    // required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,10 @@ class CurrencyCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CurrencyListTile(currency: currency),
+              CurrencyListTile(
+                // onTap: onTap,
+                currency: currency,
+              ),
               CurrencyFormField(
                 readOnly: readOnly,
                 symbol: currency.symbol,

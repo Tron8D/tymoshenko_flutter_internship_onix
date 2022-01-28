@@ -19,7 +19,7 @@ class PreferencesManagement {
     preferences.setInt(_bottomCardId, id);
   }
 
-  Future<void> setTheme(bool dark) async {
+  Future<void> setThemeInPref(bool dark) async {
     SharedPreferences preferences = await _getUserPref();
     preferences.setBool(_dark, dark);
   }

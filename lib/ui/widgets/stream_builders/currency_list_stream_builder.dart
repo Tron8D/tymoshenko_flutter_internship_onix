@@ -24,6 +24,7 @@ class CurrencyListStreamBuilder extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               itemBuilder: (context, index) {
                 return CurrencyListTile(
+                    // onTap: () {},
                     currency: currenciesRepository.currenciesList[index]);
               },
               separatorBuilder: (context, index) {

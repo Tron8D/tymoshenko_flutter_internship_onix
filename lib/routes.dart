@@ -8,6 +8,6 @@ Map<String, WidgetBuilder> routes = {
   '/': (context) => const MainScreen(),
   '/settings': (context) => SettingsScreen(),
   '/change_currency': (context) => CurrenciesScreen(
-        onTap: () {},
+      // onTap: () {},
       ),
 };

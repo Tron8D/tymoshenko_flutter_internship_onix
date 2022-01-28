@@ -17,8 +17,8 @@ class UserSettings {
   bool dark = false;
 
   void setTheme(bool dark) {
-    preferencesManagement.setTheme(dark);
-    streams.streamThemeController.sink.add(dark);
+    preferencesManagement.setThemeInPref(dark);
+    streams.setThemeInStream(dark);
   }
 
   Future<void> getThemeFromPref() async {

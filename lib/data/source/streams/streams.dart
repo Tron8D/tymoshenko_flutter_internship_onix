@@ -24,4 +24,8 @@ class Streams {
     await Future.delayed(const Duration(milliseconds: 200))
         .then((value) => currenciesStreamController.sink.add(uan));
   }
+
+  void setThemeInStream(bool dark) {
+    streamThemeController.sink.add(dark);
+  }
 }
