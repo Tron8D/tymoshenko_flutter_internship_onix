@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/ui/screens/currencies_screen.dart';
 import '/data/models/currency.dart';
 
 class CurrencyListTile extends StatelessWidget {
@@ -42,7 +43,15 @@ class CurrencyListTile extends StatelessWidget {
           size: 15,
           color: Theme.of(context).secondaryHeaderColor,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CurrenciesScreen(
+                      onTap: () {},
+                    )),
+          );
+        },
       ),
     );
   }

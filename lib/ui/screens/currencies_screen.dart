@@ -1,48 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
+import 'package:flutter_intership_onix/ui/widgets/stream_builders/currency_list_stream_builder.dart';
 
-import '/data/repository/currencies_repository.dart';
 import '/main.dart';
-import '/data/models/currency.dart';
-
-import '../widgets/currency_list_tile.dart';
 
 class CurrenciesScreen extends StatefulWidget {
-  const CurrenciesScreen({Key? key}) : super(key: key);
+  GestureTapCallback onTap;
+  CurrenciesScreen({Key? key, required this.onTap}) : super(key: key);
 
   @override
-  State<CurrenciesScreen> createState() => _CurrenciesScreenState();
+  State<CurrenciesScreen> createState() => CurrenciesScreenState();
 }
 
-class _CurrenciesScreenState extends State<CurrenciesScreen> {
-  final _currenciesRepository = CurrenciesRepository();
-
+class CurrenciesScreenState extends State<CurrenciesScreen> {
   @override
   Widget build(BuildContext context) {
-    if (_currenciesRepository.currenciesList.isEmpty) {
-      _currenciesRepository.streamSimulation();
+    if (currenciesRepository.currenciesList.isEmpty) {
+      streams.currencyStreamSimulation();
     }
-    return StreamBuilder<Currency>(
-        stream: _currenciesRepository.currenciesStream(),
+    return StreamBuilder(
+        stream: streams.themeStream(),
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            _currenciesRepository.currenciesList.add(snapshot.data as Currency);
-            return ListView.separated(
-              padding: const EdgeInsets.all(20),
-              itemBuilder: (context, index) {
-                return CurrencyListTile(
-                    currency: _currenciesRepository.currenciesList[index]);
-              },
-              separatorBuilder: (context, index) {
-                return Divider(
-                  color: userSettings.isSecondaryHeaderColor(),
-                );
-              },
-              itemCount: _currenciesRepository.currenciesList.length,
-            );
-          } else {
-            const Text('List empty');
-          }
-          return const CircularProgressIndicator();
+          return Scaffold(
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).primaryColor,
+              title: Text(
+                'Currencies',
+                style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+              ),
+              centerTitle: true,
+              actions: const [
+                SettingsButton(),
+              ],
+            ),
+            body: const CurrencyListStreamBuilder(),
+          );
         });
   }
 }

@@ -17,13 +17,11 @@ class MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screenList = [
     const ConverterScreen(),
-    const CurrenciesScreen(),
+    CurrenciesScreen(
+      onTap: () {},
+    ),
   ];
 
-  final List<String> _titleList = [
-    'Converter',
-    'Currencies',
-  ];
   final List<BottomNavigationBarItem> _items = [
     BottomNavigationBarItem(
       icon: SvgPicture.asset(
@@ -62,45 +60,20 @@ class MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: userSettings.isDark(),
-      home: Scaffold(
-        body: Center(
-          child: _screenList[_selectedIndex],
-        ),
-        appBar: AppBar(
-          backgroundColor: userSettings.isPrimaryColor(),
-          title: Text(
-            _titleList[_selectedIndex],
-            style: TextStyle(color: userSettings.isSecondaryHeaderColor()),
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () async {
-                Future<dynamic> result = Navigator.pushNamed(
-                    context, '/settings',
-                    arguments: userSettings.dark);
-                result
-                    .then((value) => userSettings.dark = value)
-                    .then((value) => setState(() {}));
-              },
-              icon: SvgPicture.asset(
-                'assets/icons/settings.svg',
-                // height: 10,
-                color: userSettings.isSecondaryHeaderColor(),
-              ),
+    return StreamBuilder(
+        stream: streams.themeStream(),
+        builder: (context, snapshot) {
+          return Scaffold(
+            body: Center(
+              child: _screenList[_selectedIndex],
             ),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: userSettings.isSecondaryHeaderColor(),
-          items: _items,
-          currentIndex: _selectedIndex,
-          onTap: changeIndex,
-        ),
-      ),
-    );
+            bottomNavigationBar: BottomNavigationBar(
+              selectedItemColor: Theme.of(context).secondaryHeaderColor,
+              items: _items,
+              currentIndex: _selectedIndex,
+              onTap: changeIndex,
+            ),
+          );
+        });
   }
 }

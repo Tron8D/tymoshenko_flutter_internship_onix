@@ -17,4 +17,8 @@ class Currency {
   }) {
     assert(rateToUah > 0);
   }
+  int getId() {
+    print(id);
+    return id;
+  }
 }

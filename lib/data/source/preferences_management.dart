@@ -38,4 +38,9 @@ class PreferencesManagement {
     SharedPreferences preferences = await _getUserPref();
     return preferences.getBool(_dark);
   }
+
+  Future<void> clearPref() async {
+    SharedPreferences preferences = await _getUserPref();
+    await preferences.clear();
+  }
 }

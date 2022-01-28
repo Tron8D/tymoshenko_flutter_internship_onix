@@ -6,9 +6,11 @@ import 'currency_list_tile.dart';
 import 'fields/currency_form_field.dart';
 
 class CurrencyCard extends StatelessWidget {
-  final Currency currency;
+  Currency currency;
+  final bool readOnly;
 
-  const CurrencyCard({Key? key, required this.currency}) : super(key: key);
+  CurrencyCard({Key? key, required this.currency, required this.readOnly})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,10 @@ class CurrencyCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CurrencyListTile(currency: currency),
-              CurrencyFormField(symbol: currency.symbol),
+              CurrencyFormField(
+                readOnly: readOnly,
+                symbol: currency.symbol,
+              ),
             ],
           ),
         ),

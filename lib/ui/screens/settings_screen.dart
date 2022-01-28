@@ -15,17 +15,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: userSettings.isPrimaryColor(),
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text(
           'Settings',
           style: TextStyle(
-            color: userSettings.isSecondaryHeaderColor(),
+            color: Theme.of(context).secondaryHeaderColor,
           ),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.done),
             onPressed: () {
+              userSettings.setTheme(widget._darkTheme);
               Navigator.pop(context, widget._darkTheme);
             },
           ),
@@ -33,10 +34,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: Center(
         child: CheckboxListTile(
-          activeColor: userSettings.isSecondaryHeaderColor(),
+          activeColor: Theme.of(context).secondaryHeaderColor,
           title: const Text("Dark theme"),
           value: widget._darkTheme,
-          onChanged: (value) {
+          onChanged: (value) async {
             setState(() {
               widget._darkTheme = value!;
             });
