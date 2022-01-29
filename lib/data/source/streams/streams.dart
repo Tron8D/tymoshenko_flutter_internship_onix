@@ -4,17 +4,17 @@ import '/data/models/currency.dart';
 import '../currencies.dart';
 
 class Streams {
-  final currenciesStreamController = StreamController<Currency>.broadcast();
+  final currenciesStreamController = StreamController<Currency>();
   Stream<Currency> currenciesStream() => currenciesStreamController.stream;
 
-  final streamThemeController = StreamController<bool>.broadcast();
-  Stream<bool> themeStream() => streamThemeController.stream;
+  final _streamThemeController = StreamController<bool>();
+  Stream<bool> get themeStream => _streamThemeController.stream;
 
-  final topCardStreamController = StreamController<int>.broadcast();
-  Stream<int> topCardStream() => topCardStreamController.stream;
+  final _topCardStreamController = StreamController<int>();
+  Stream<int> get topCardStream => _topCardStreamController.stream;
 
-  final bottomCardStreamController = StreamController<int>.broadcast();
-  Stream<int> bottomCardStream() => bottomCardStreamController.stream;
+  final _bottomCardStreamController = StreamController<int>();
+  Stream<int> get bottomCardStream => _bottomCardStreamController.stream;
 
   void currencyStreamSimulation() async {
     await Future.delayed(const Duration(milliseconds: 500))
@@ -26,6 +26,14 @@ class Streams {
   }
 
   void setThemeInStream(bool dark) {
-    streamThemeController.sink.add(dark);
+    _streamThemeController.sink.add(dark);
+  }
+
+  void setTopCardInStream(int id) {
+    _topCardStreamController.sink.add(id);
+  }
+
+  void setBottomCardInStream(int id) {
+    _bottomCardStreamController.sink.add(id);
   }
 }

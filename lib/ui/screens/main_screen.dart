@@ -17,7 +17,7 @@ class MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screenList = [
     const ConverterScreen(),
-    CurrenciesScreen(
+    const CurrenciesScreen(
         // onTap: () {},
         ),
   ];
@@ -60,20 +60,16 @@ class MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: streams.themeStream(),
-        builder: (context, snapshot) {
-          return Scaffold(
-            body: Center(
-              child: _screenList[_selectedIndex],
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              selectedItemColor: Theme.of(context).secondaryHeaderColor,
-              items: _items,
-              currentIndex: _selectedIndex,
-              onTap: changeIndex,
-            ),
-          );
-        });
+    return Scaffold(
+      body: Center(
+        child: _screenList[_selectedIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).secondaryHeaderColor,
+        items: _items,
+        currentIndex: _selectedIndex,
+        onTap: changeIndex,
+      ),
+    );
   }
 }

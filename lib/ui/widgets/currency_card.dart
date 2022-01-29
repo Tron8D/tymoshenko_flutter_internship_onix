@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/ui/screens/currencies_screen.dart';
+import 'package:flutter_intership_onix/ui/screens/selectable_currencies_screen.dart';
 
 import '/data/models/currency.dart';
 import 'currency_list_tile.dart';
@@ -32,7 +34,7 @@ class CurrencyCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CurrencyListTile(
-                // onTap: onTap,
+                onTap: (_) => _onTap(context),
                 currency: currency,
               ),
               CurrencyFormField(
@@ -42,6 +44,15 @@ class CurrencyCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _onTap(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SelectableCurrenciesScreen(),
       ),
     );
   }

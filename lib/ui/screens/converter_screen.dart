@@ -17,48 +17,41 @@ class ConverterScreen extends StatefulWidget {
 class _ConverterScreenState extends State<ConverterScreen> {
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-        stream: userSettings.streams.themeStream(),
-        builder: (context, snapshot) {
-          return Scaffold(
-            appBar: AppBar(
-              backgroundColor: Theme.of(context).primaryColor,
-              title: Text(
-                'Converter',
-                style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
-              ),
-              centerTitle: true,
-              actions: const [
-                SettingsButton(),
-              ],
-            ),
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CurrencyCardStreamBuilder(
-                  stream: userSettings.streams.topCardStream(),
-                  readOnly: false,
-                  currency: eur,
-                  // onTap: ,
-                ),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    ConverterButton(),
-                    SwitchButton(),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                CurrencyCardStreamBuilder(
-                  stream: userSettings.streams.bottomCardStream(),
-                  readOnly: true,
-                  currency: uan,
-                  // onTap: userSettings.preferencesManagement.setBottomCardId(id),
-                ),
-              ],
-            ),
-          );
-        });
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          'Converter',
+          style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
+        ),
+        centerTitle: true,
+        actions: const [
+          SettingsButton(),
+        ],
+      ),
+      body: ListView(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CurrencyCardStreamBuilder(
+            stream: userSettings.streams.topCardStream,
+            readOnly: false,
+            // onTap: ,
+          ),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: const [
+              ConverterButton(),
+              SwitchButton(),
+            ],
+          ),
+          const SizedBox(height: 5),
+          CurrencyCardStreamBuilder(
+            stream: userSettings.streams.bottomCardStream,
+            readOnly: true,
+          ),
+        ],
+      ),
+    );
   }
 }

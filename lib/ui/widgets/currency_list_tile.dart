@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_intership_onix/ui/screens/currencies_screen.dart';
+import 'package:flutter_intership_onix/utils/utils.dart';
 
 import '/data/models/currency.dart';
 
 class CurrencyListTile extends StatelessWidget {
   final Currency currency;
-  // final void Function() onTap;
+  final ListTileCallback onTap;
 
   const CurrencyListTile({
     Key? key,
     required this.currency,
-    // required this.onTap,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -51,24 +52,15 @@ class CurrencyListTile extends StatelessWidget {
         style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
       ),
       trailing: IconButton(
-          alignment: Alignment.centerRight,
-          padding: EdgeInsets.zero,
-          icon: Icon(
-            Icons.arrow_forward_ios,
-            size: 15,
-            color: Theme.of(context).secondaryHeaderColor,
-          ),
-          // onPressed: onTap,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CurrenciesScreen(
-                    // onTap: onTap,
-                    ),
-              ),
-            );
-          }),
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.zero,
+        icon: Icon(
+          Icons.arrow_forward_ios,
+          size: 15,
+          color: Theme.of(context).secondaryHeaderColor,
+        ),
+        onPressed: () => onTap(currency.id),
+      ),
     );
   }
 }

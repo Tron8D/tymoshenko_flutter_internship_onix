@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 import '/main.dart';
 
 class SettingsScreen extends StatefulWidget {
-  bool _darkTheme = userSettings.dark;
-  SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  bool _darkTheme = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _defaultTheme();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,10 +32,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.done),
-            onPressed: () {
-              userSettings.setTheme(widget._darkTheme);
-              Navigator.pop(context, widget._darkTheme);
-            },
+            onPressed: _onSave,
           ),
         ],
       ),
@@ -36,15 +40,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: CheckboxListTile(
           activeColor: Theme.of(context).secondaryHeaderColor,
           title: const Text("Dark theme"),
-          value: widget._darkTheme,
-          onChanged: (value) async {
-            setState(() {
-              widget._darkTheme = value!;
-            });
-          },
+          value: _darkTheme,
+          onChanged: _onChanged,
           controlAffinity: ListTileControlAffinity.leading,
         ),
       ),
     );
+  }
+
+  Future<void> _onSave() async {
+    await userSettings.setTheme(_darkTheme);
+    Navigator.pop(context, _darkTheme);
+  }
+
+  void _onChanged(bool? value) {
+    setState(() {
+      _darkTheme = value!;
+    });
+  }
+
+  Future<void> _defaultTheme() async {
+    _darkTheme = Theme.of(context).brightness == Brightness.dark;
   }
 }

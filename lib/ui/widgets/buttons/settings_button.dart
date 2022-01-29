@@ -10,13 +10,12 @@ class SettingsButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () async {
-        Future<dynamic> result = Navigator.pushNamed(context, '/settings',
-            arguments: userSettings.dark);
-        result.then((value) {
-          if (value != null) {
-            return userSettings.dark = value;
-          }
-        });
+        Future<dynamic> result = Navigator.pushNamed(context, '/settings');
+        // result.then((value) {
+        //   if (value != null) {
+        //     return userSettings.isDarkTheme = value;
+        //   }
+        // });
       },
       icon: SvgPicture.asset(
         'assets/icons/settings.svg',

@@ -12,7 +12,7 @@ void main() {
 //create user app settings
 final streams = Streams();
 final UserSettings userSettings = UserSettings(streams);
-final currenciesRepository = CurrenciesRepository();
+final currenciesRepository = CurrenciesRepository(streams);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -20,12 +20,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    userSettings.getThemeFromPref();
     // userSettings.preferencesManagement.clearPref();
-    return StreamBuilder(
-        stream: streams.themeStream(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
+    return StreamBuilder<bool>(
+        initialData: false,
+        stream: streams.themeStream,
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.hasError || !snapshot.hasData) {
             return const MaterialApp(
               home: Scaffold(
                 body: Text('Theme error!'),
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: userSettings.lightTheme,
               darkTheme: userSettings.darkTheme,
-              themeMode: userSettings.isDark(),
+              themeMode: snapshot.data! ? ThemeMode.dark : ThemeMode.light,
               initialRoute: "/",
               routes: routes,
             );
