@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CurrencyFormField extends StatelessWidget {
-  String symbol;
+  final String symbol;
   final bool readOnly;
 
-  CurrencyFormField({Key? key, required this.symbol, required this.readOnly})
+  const CurrencyFormField(
+      {Key? key, required this.symbol, required this.readOnly})
       : super(key: key);
 
   @override

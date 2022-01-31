@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
-import 'package:flutter_intership_onix/ui/widgets/stream_builders/currency_card_stream_builder.dart';
 
-import '/data/source/currencies.dart';
-import '../../main.dart';
-import '../widgets/buttons/converter_button.dart';
-import '../widgets/buttons/switch_button.dart';
+import 'package:flutter_intership_onix/main.dart';
+import 'package:flutter_intership_onix/ui/widgets/buttons/converter_button.dart';
+import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
+import 'package:flutter_intership_onix/ui/widgets/buttons/switch_button.dart';
+import 'package:flutter_intership_onix/ui/widgets/stream_builders/currency_card_stream_builder.dart';
 
 class ConverterScreen extends StatefulWidget {
   const ConverterScreen({Key? key}) : super(key: key);
@@ -25,28 +24,23 @@ class _ConverterScreenState extends State<ConverterScreen> {
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
-        actions: const [
-          SettingsButton(),
-        ],
+        actions: const [SettingsButton()],
       ),
       body: ListView(
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CurrencyCardStreamBuilder(
+            cardIndex: 0,
             stream: userSettings.streams.topCardStream,
             readOnly: false,
-            // onTap: ,
           ),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: const [
-              ConverterButton(),
-              SwitchButton(),
-            ],
+            children: const [ConverterButton(), SwitchButton()],
           ),
           const SizedBox(height: 5),
           CurrencyCardStreamBuilder(
+            cardIndex: 1,
             stream: userSettings.streams.bottomCardStream,
             readOnly: true,
           ),

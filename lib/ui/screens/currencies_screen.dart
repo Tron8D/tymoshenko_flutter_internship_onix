@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/stream_builders/currency_list_stream_builder.dart';
 
-import '/main.dart';
-
 class CurrenciesScreen extends StatefulWidget {
   const CurrenciesScreen({
     Key? key,
@@ -17,9 +15,6 @@ class CurrenciesScreen extends StatefulWidget {
 class CurrenciesScreenState extends State<CurrenciesScreen> {
   @override
   Widget build(BuildContext context) {
-    // if (currenciesRepository.currenciesList.isEmpty) {
-    //   streams.currencyStreamSimulation();
-    // }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -28,9 +23,7 @@ class CurrenciesScreenState extends State<CurrenciesScreen> {
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
-        actions: const [
-          SettingsButton(),
-        ],
+        actions: const [SettingsButton()],
       ),
       body: CurrencyListStreamBuilder(
         onTap: _onTap,
@@ -38,7 +31,6 @@ class CurrenciesScreenState extends State<CurrenciesScreen> {
     );
   }
 
-  void _onTap(_) {
-    Navigator.of(context).pushNamed('/info_card_screen');
-  }
+  void _onTap(id) =>
+      Navigator.of(context).pushNamed('/info_card_screen', arguments: id);
 }

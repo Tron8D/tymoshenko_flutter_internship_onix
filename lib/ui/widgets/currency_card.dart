@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/ui/screens/currencies_screen.dart';
-import 'package:flutter_intership_onix/ui/screens/selectable_currencies_screen.dart';
 
-import '/data/models/currency.dart';
-import 'currency_list_tile.dart';
-import 'fields/currency_form_field.dart';
+import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/main.dart';
+import 'package:flutter_intership_onix/ui/screens/selectable_currencies_screen.dart';
+import 'package:flutter_intership_onix/ui/widgets/currency_list_tile.dart';
+import 'package:flutter_intership_onix/ui/widgets/fields/currency_form_field.dart';
 
 class CurrencyCard extends StatelessWidget {
-  Currency currency;
+  final int cardIndex;
+  final Currency currency;
   final bool readOnly;
-  // final void Function() onTap;
 
-  CurrencyCard({
+  const CurrencyCard({
     Key? key,
     required this.currency,
     required this.readOnly,
-    // required this.onTap,
+    required this.cardIndex,
   }) : super(key: key);
 
   @override
@@ -48,12 +48,18 @@ class CurrencyCard extends StatelessWidget {
     );
   }
 
-  void _onTap(BuildContext context) {
-    Navigator.push(
+  void _onTap(BuildContext context) async {
+    int result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const SelectableCurrenciesScreen(),
       ),
     );
+
+    if (cardIndex == 0) {
+      userSettings.setTopCard(result);
+    } else {
+      userSettings.setBottomCard(result);
+    }
   }
 }

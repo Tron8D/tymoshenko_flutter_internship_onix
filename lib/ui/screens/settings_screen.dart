@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '/main.dart';
+import 'package:flutter_intership_onix/main.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -10,7 +10,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _darkTheme = false;
+  late bool _darkTheme;
 
   @override
   void didChangeDependencies() {
@@ -48,18 +48,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Future<void> _onSave() async {
-    await userSettings.setTheme(_darkTheme);
-    Navigator.pop(context, _darkTheme);
-  }
+  void _onSave() => Navigator.pop(context, _darkTheme);
 
-  void _onChanged(bool? value) {
+  void _onChanged(bool? value) async {
     setState(() {
       _darkTheme = value!;
     });
+    await userSettings.setTheme(_darkTheme);
   }
 
-  Future<void> _defaultTheme() async {
-    _darkTheme = Theme.of(context).brightness == Brightness.dark;
-  }
+  void _defaultTheme() =>
+      _darkTheme = Theme.of(context).brightness == Brightness.dark;
 }

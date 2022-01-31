@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '/main.dart';
-import 'converter_screen.dart';
-import 'currencies_screen.dart';
+import 'package:flutter_intership_onix/ui/screens/converter_screen.dart';
+import 'package:flutter_intership_onix/ui/screens/currencies_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -15,13 +14,13 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
+  //List of screens for bottom navigation bar
   final List<Widget> _screenList = [
     const ConverterScreen(),
-    const CurrenciesScreen(
-        // onTap: () {},
-        ),
+    const CurrenciesScreen(),
   ];
 
+  //List of icons for bottom navigation bar
   final List<BottomNavigationBarItem> _items = [
     BottomNavigationBarItem(
       icon: SvgPicture.asset(

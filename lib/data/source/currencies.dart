@@ -1,4 +1,4 @@
-import '../models/currency.dart';
+import 'package:flutter_intership_onix/data/models/currency.dart';
 
 Currency usd = Currency(
   id: 0,

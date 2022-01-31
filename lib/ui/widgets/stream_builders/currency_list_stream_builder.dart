@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/data/models/currency.dart';
-import 'package:flutter_intership_onix/utils/utils.dart';
 
-import '../../../main.dart';
-import '../currency_list_tile.dart';
+import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/main.dart';
+import 'package:flutter_intership_onix/ui/widgets/currency_list_tile.dart';
+import 'package:flutter_intership_onix/utils/utils.dart';
 
 class CurrencyListStreamBuilder extends StatelessWidget {
   final ListTileCallback onTap;
@@ -15,33 +15,35 @@ class CurrencyListStreamBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Currency>(
-        stream: streams.currenciesStream(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData ||
-              currenciesRepository.currenciesList.isNotEmpty) {
-            if (snapshot.data != null) {
-              currenciesRepository.currenciesList
-                  .add(snapshot.data as Currency);
-            }
-            return ListView.separated(
-              padding: const EdgeInsets.all(20),
-              itemBuilder: (context, index) {
-                return CurrencyListTile(
-                    onTap: onTap,
-                    currency: currenciesRepository.currenciesList[index]);
-              },
-              separatorBuilder: (context, index) {
-                return Divider(
-                  color: Theme.of(context).secondaryHeaderColor,
-                );
-              },
-              itemCount: currenciesRepository.currenciesList.length,
-            );
-          } else {
-            const Text('List empty');
+    return StreamBuilder<List<Currency>>(
+      stream: streams.currenciesStream(),
+      builder: (BuildContext context, AsyncSnapshot<List<Currency>> snapshot) {
+        if (snapshot.hasError) {
+          return const Text('Error');
+        } else if (!snapshot.hasData &&
+            currenciesRepository.currenciesList.isEmpty) {
+          return const Text('List empty');
+        } else {
+          if (snapshot.hasData) {
+            currenciesRepository.currenciesList = snapshot.data!;
           }
-          return const Center(child: CircularProgressIndicator());
-        });
+          return ListView.separated(
+            padding: const EdgeInsets.all(20),
+            itemBuilder: (context, index) {
+              return CurrencyListTile(
+                onTap: onTap,
+                currency: currenciesRepository.currenciesList[index],
+              );
+            },
+            separatorBuilder: (context, index) {
+              return Divider(
+                color: Theme.of(context).secondaryHeaderColor,
+              );
+            },
+            itemCount: currenciesRepository.currenciesList.length,
+          );
+        }
+      },
+    );
   }
 }

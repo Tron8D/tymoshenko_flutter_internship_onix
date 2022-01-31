@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../routes.dart';
-import 'data/repository/currencies_repository.dart';
-import 'data/source/streams/streams.dart';
-import 'data/source/user_settings.dart';
+import 'package:flutter_intership_onix/data/repository/currencies_repository.dart';
+import 'package:flutter_intership_onix/data/source/streams/streams.dart';
+import 'package:flutter_intership_onix/data/source/user_settings.dart';
+import 'package:flutter_intership_onix/routes.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/ui/screens/currencies_screen.dart';
-import 'package:flutter_intership_onix/utils/utils.dart';
 
-import '/data/models/currency.dart';
+import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/utils/utils.dart';
 
 class CurrencyListTile extends StatelessWidget {
   final Currency currency;
