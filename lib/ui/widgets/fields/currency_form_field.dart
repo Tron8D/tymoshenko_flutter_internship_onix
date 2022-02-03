@@ -3,11 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CurrencyFormField extends StatelessWidget {
   final String symbol;
-  const CurrencyFormField({Key? key, required this.symbol}) : super(key: key);
+  final bool readOnly;
+
+  const CurrencyFormField(
+      {Key? key, required this.symbol, required this.readOnly})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
       keyboardType: TextInputType.number,
       style: TextStyle(
           fontSize: 35, color: Theme.of(context).secondaryHeaderColor),

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../data/models/currency.dart';
+import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/utils/utils.dart';
 
 class CurrencyListTile extends StatelessWidget {
   final Currency currency;
-  const CurrencyListTile({Key? key, required this.currency}) : super(key: key);
+  final ListTileCallback onTap;
+
+  const CurrencyListTile({
+    Key? key,
+    required this.currency,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +29,14 @@ class CurrencyListTile extends StatelessWidget {
         child: Image.network(
           'https://flagcdn.com/w80/' + currency.countryCode + '.png',
           scale: 1.25,
+          errorBuilder:
+              (BuildContext context, Object exception, StackTrace? stackTrace) {
+            return Icon(
+              Icons.image,
+              size: 35,
+              color: Theme.of(context).secondaryHeaderColor,
+            );
+          },
         ),
       ),
       title: Text(
@@ -43,7 +58,7 @@ class CurrencyListTile extends StatelessWidget {
           size: 15,
           color: Theme.of(context).secondaryHeaderColor,
         ),
-        onPressed: () {},
+        onPressed: () => onTap(currency.id),
       ),
     );
   }
