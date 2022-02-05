@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_intership_onix/data/models/currency.dart';
-import 'package:flutter_intership_onix/main.dart';
+import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
 import 'package:flutter_intership_onix/ui/screens/selectable_currencies_screen.dart';
 import 'package:flutter_intership_onix/ui/widgets/currency_list_tile.dart';
 import 'package:flutter_intership_onix/ui/widgets/fields/currency_form_field.dart';
+import 'package:provider/provider.dart';
 
 class CurrencyCard extends StatelessWidget {
   final int cardIndex;
@@ -57,9 +58,9 @@ class CurrencyCard extends StatelessWidget {
     );
 
     if (cardIndex == 0) {
-      userSettings.setTopCard(result);
+      context.read<ConverterProvider>().setTopCard(result);
     } else {
-      userSettings.setBottomCard(result);
+      context.read<ConverterProvider>().setBottomCard(result);
     }
   }
 }
