@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
-import 'package:flutter_intership_onix/ui/widgets/stream_builders/currency_list_stream_builder.dart';
+import 'package:flutter_intership_onix/ui/widgets/currencies_list_view.dart';
 
 class CurrenciesScreen extends StatefulWidget {
   const CurrenciesScreen({
@@ -25,12 +28,23 @@ class CurrenciesScreenState extends State<CurrenciesScreen> {
         centerTitle: true,
         actions: const [SettingsButton()],
       ),
-      body: CurrencyListStreamBuilder(
-        onTap: _onTap,
+      body: Consumer<CurrenciesListProvider>(
+        builder: (context, currenciesListProvider, _) {
+          if (currenciesListProvider.isLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return CurrenciesListView(
+              onTap: _onTap,
+            );
+          }
+        },
       ),
     );
   }
 
-  void _onTap(id) =>
-      Navigator.of(context).pushNamed('/info_card_screen', arguments: id);
+  void _onTap(id) {
+    Currency currency =
+        context.read<CurrenciesListProvider>().getCurrencyFromId(id);
+    Navigator.of(context).pushNamed('/info_card_screen', arguments: currency);
+  }
 }

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_intership_onix/data/models/currency.dart';
-import 'package:flutter_intership_onix/main.dart';
 
 class CurrencyInfoScreen extends StatelessWidget {
   const CurrencyInfoScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final int id = ModalRoute.of(context)!.settings.arguments as int;
-    Currency currency = currenciesRepository.getCurrencyFromId(id);
+    final Currency currency =
+        ModalRoute.of(context)!.settings.arguments as Currency;
 
     return Scaffold(
       appBar: AppBar(

@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
+import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
+import 'package:provider/provider.dart';
 
-import 'package:flutter_intership_onix/data/repository/currencies_repository.dart';
-import 'package:flutter_intership_onix/data/source/streams/streams.dart';
-import 'package:flutter_intership_onix/data/source/user_settings.dart';
 import 'package:flutter_intership_onix/routes.dart';
+import 'package:flutter_intership_onix/ui/providers/theme_provider.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-//create user app settings
-final streams = Streams();
-final UserSettings userSettings = UserSettings(streams);
-final currenciesRepository = CurrenciesRepository(streams);
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,27 +17,29 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // userSettings.preferencesManagement.clearPref();
-    return StreamBuilder<bool>(
-        initialData: false,
-        stream: streams.themeStream,
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasError || !snapshot.hasData) {
-            return const MaterialApp(
-              home: Scaffold(
-                body: Text('Theme error!'),
-              ),
-            );
-          } else {
-            return MaterialApp(
-              title: 'Flutter lesson 6',
-              debugShowCheckedModeBanner: false,
-              theme: userSettings.lightTheme,
-              darkTheme: userSettings.darkTheme,
-              themeMode: snapshot.data! ? ThemeMode.dark : ThemeMode.light,
-              initialRoute: "/",
-              routes: routes,
-            );
-          }
-        });
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CurrenciesListProvider>(
+            create: (context) => CurrenciesListProvider()),
+        ChangeNotifierProvider<ConverterProvider>(
+            create: (context) => ConverterProvider()),
+        ChangeNotifierProvider(
+          create: (context) => ThemeProvider(),
+        )
+      ],
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, _) {
+          return MaterialApp(
+            title: 'Flutter lesson 7',
+            debugShowCheckedModeBanner: false,
+            theme: themeProvider.lightTheme,
+            darkTheme: themeProvider.darkTheme,
+            themeMode: context.watch<ThemeProvider>().userThemeMode,
+            initialRoute: "/",
+            routes: routes,
+          );
+        },
+      ),
+    );
   }
 }
