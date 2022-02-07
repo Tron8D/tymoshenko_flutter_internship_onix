@@ -48,13 +48,5 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void _onChanged(bool? value) async {
     _darkTheme = value!;
     context.read<ThemeProvider>().changeThemeData(value);
-    // setState(() {
-    //   _darkTheme = value!;
-    //   context.read<ThemeProvider>().changeThemeData(value);
-    // });
-    // await userSettings.setTheme(_darkTheme);
   }
-
-  // void _defaultTheme() =>
-  //     _darkTheme = Theme.of(context).brightness == Brightness.dark;
 }

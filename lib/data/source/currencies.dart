@@ -5,7 +5,7 @@ Currency usd = Currency(
   name: 'USD',
   fullName: 'American Dollar',
   symbol: '\$',
-  rateToUah: 1,
+  rateToUah: 0.037,
   countryCode: 'us',
 );
 Currency eur = Currency(
@@ -13,7 +13,7 @@ Currency eur = Currency(
   name: 'EUR',
   fullName: 'Euro',
   symbol: '€',
-  rateToUah: 1,
+  rateToUah: 0.032,
   countryCode: 'eu',
 );
 Currency uan = Currency(

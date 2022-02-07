@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
-import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter_intership_onix/ui/screens/converter_screen.dart';
 import 'package:flutter_intership_onix/ui/screens/currencies_screen.dart';
-import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -62,23 +59,15 @@ class MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<CurrenciesListProvider>(
-            create: (context) => CurrenciesListProvider()),
-        ChangeNotifierProvider<ConverterProvider>(
-            create: (context) => ConverterProvider()),
-      ],
-      child: Scaffold(
-        body: Center(
-          child: _screenList[_selectedIndex],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Theme.of(context).secondaryHeaderColor,
-          items: _items,
-          currentIndex: _selectedIndex,
-          onTap: changeIndex,
-        ),
+    return Scaffold(
+      body: Center(
+        child: _screenList[_selectedIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).secondaryHeaderColor,
+        items: _items,
+        currentIndex: _selectedIndex,
+        onTap: changeIndex,
       ),
     );
   }

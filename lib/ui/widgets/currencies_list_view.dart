@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:flutter_intership_onix/ui/widgets/currency_list_tile.dart';
 import 'package:flutter_intership_onix/utils/utils.dart';
-import 'package:provider/provider.dart';
 
 class CurrenciesListView extends StatelessWidget {
   final ListTileCallback onTap;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:provider/provider.dart';
 
+import 'package:flutter_intership_onix/data/models/currency.dart';
 import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
 import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:flutter_intership_onix/ui/widgets/buttons/converter_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/buttons/switch_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/currency_card.dart';
-import 'package:provider/provider.dart';
 
 class ConverterScreen extends StatefulWidget {
   const ConverterScreen({Key? key}) : super(key: key);

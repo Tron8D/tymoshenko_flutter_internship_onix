@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
+import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:flutter_intership_onix/routes.dart';
@@ -15,8 +17,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // userSettings.preferencesManagement.clearPref();
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CurrenciesListProvider>(
+            create: (context) => CurrenciesListProvider()),
+        ChangeNotifierProvider<ConverterProvider>(
+            create: (context) => ConverterProvider()),
+        ChangeNotifierProvider(
+          create: (context) => ThemeProvider(),
+        )
+      ],
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, _) {
           return MaterialApp(

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:flutter_intership_onix/data/models/currency.dart';
 import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
+import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:flutter_intership_onix/ui/screens/selectable_currencies_screen.dart';
 import 'package:flutter_intership_onix/ui/widgets/currency_list_tile.dart';
 import 'package:flutter_intership_onix/ui/widgets/fields/currency_form_field.dart';
-import 'package:provider/provider.dart';
 
 class CurrencyCard extends StatelessWidget {
   final int cardIndex;
@@ -39,6 +40,9 @@ class CurrencyCard extends StatelessWidget {
                 currency: currency,
               ),
               CurrencyFormField(
+                indexTextFormField: cardIndex,
+                controller: _selectController(context),
+                initialValue: _selectInitialValue(context),
                 readOnly: readOnly,
                 symbol: currency.symbol,
               ),
@@ -58,9 +62,35 @@ class CurrencyCard extends StatelessWidget {
     );
 
     if (cardIndex == 0) {
+      context.read<ConverterProvider>().converter.topCardRate = context
+          .read<CurrenciesListProvider>()
+          .getCurrencyFromId(result)
+          .rateToUah;
+
       context.read<ConverterProvider>().setTopCard(result);
     } else {
+      context.read<ConverterProvider>().converter.bottomCardRate = context
+          .read<CurrenciesListProvider>()
+          .getCurrencyFromId(result)
+          .rateToUah;
+
       context.read<ConverterProvider>().setBottomCard(result);
+    }
+  }
+
+  double _selectInitialValue(BuildContext context) {
+    if (cardIndex == 0) {
+      return context.watch<ConverterProvider>().converter.inputValue;
+    } else {
+      return context.watch<ConverterProvider>().converter.convertedValue;
+    }
+  }
+
+  TextEditingController _selectController(BuildContext context) {
+    if (cardIndex == 0) {
+      return context.watch<ConverterProvider>().topCardController;
+    } else {
+      return context.watch<ConverterProvider>().bottomCardController;
     }
   }
 }
