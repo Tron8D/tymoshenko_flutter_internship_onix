@@ -26,18 +26,7 @@ class CurrencyListTile extends StatelessWidget {
             blurRadius: 7,
           )
         ], borderRadius: BorderRadius.all(Radius.circular(5))),
-        child: Image.network(
-          'https://flagcdn.com/w80/' + currency.countryCode + '.png',
-          scale: 1.25,
-          errorBuilder:
-              (BuildContext context, Object exception, StackTrace? stackTrace) {
-            return Icon(
-              Icons.image,
-              size: 35,
-              color: Theme.of(context).secondaryHeaderColor,
-            );
-          },
-        ),
+        child: _getImage(currency.countryCode),
       ),
       title: Text(
         currency.name,
@@ -61,5 +50,35 @@ class CurrencyListTile extends StatelessWidget {
         onPressed: () => onTap(currency.id),
       ),
     );
+  }
+
+  Widget _getImage(String countryCode) {
+    if (countryCode == 'btc') {
+      return Image.network(
+        'https://mundotokens.com/wp-content/uploads/2018/01/bitcoin_.jpg',
+        width: 80,
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return Icon(
+            Icons.image,
+            size: 35,
+            color: Theme.of(context).secondaryHeaderColor,
+          );
+        },
+      );
+    } else {
+      return Image.network(
+        'https://flagcdn.com/w80/' + countryCode + '.png',
+        width: 80,
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return Icon(
+            Icons.image,
+            size: 35,
+            color: Theme.of(context).secondaryHeaderColor,
+          );
+        },
+      );
+    }
   }
 }

@@ -16,9 +16,9 @@ class ConverterProvider extends ChangeNotifier {
   //load card's id selected by the user
   void _loadFromPref() async {
     notifyListeners();
-    converter.topCardId = await _preferencesManagement.getTopCardId() ?? 0;
+    converter.topCardId = await _preferencesManagement.getTopCardId() ?? 1;
     converter.bottomCardId =
-        await _preferencesManagement.getBottomCardId() ?? 1;
+        await _preferencesManagement.getBottomCardId() ?? 2;
     notifyListeners();
   }
 
@@ -51,13 +51,9 @@ class ConverterProvider extends ChangeNotifier {
   void convertValue(double value) {
     if (converter.topCardRate != 1.0) {
       converter.convertedValue =
-          (value / converter.topCardRate) * converter.bottomCardRate;
-      // print(
-      //     "convert: ${converter.convertedValue} = $value / ${converter.topCardRate} * ${converter.bottomCardRate}");
+          (value * converter.topCardRate) / converter.bottomCardRate;
     } else {
-      converter.convertedValue = value * converter.bottomCardRate;
-      // print(
-      //     "convert: ${converter.convertedValue} = $value * ${converter.bottomCardRate}");
+      converter.convertedValue = value / converter.bottomCardRate;
     }
     notifyListeners();
   }
@@ -66,14 +62,17 @@ class ConverterProvider extends ChangeNotifier {
     double _tempRate = converter.topCardRate;
     converter.topCardRate = converter.bottomCardRate;
     converter.bottomCardRate = _tempRate;
+
     notifyListeners();
   }
 
   //this function will be called when text field changed
   void textFieldOnChanged(int indexTextFormField, String value) {
     double _parseValue;
+
     if (indexTextFormField == 0) {
       _parseValue = double.tryParse(value) ?? 0.0;
+
       if (_parseValue != converter.inputValue && value.isNotEmpty) {
         converter.inputValue = _parseValue;
         convertValue(_parseValue);

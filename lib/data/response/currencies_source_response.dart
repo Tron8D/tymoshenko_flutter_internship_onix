@@ -17,6 +17,7 @@ class CurrencySourceResponse {
   final String sale;
 
   CurrencySourceResponse(this.ccy, this.baseCcy, this.buy, this.sale);
+
   factory CurrencySourceResponse.fromJson(Map<String, dynamic> json) =>
       _$CurrencySourceResponseFromJson(json);
 

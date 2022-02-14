@@ -36,27 +36,46 @@ class CurrencyInfoScreen extends StatelessWidget {
                     blurRadius: 7,
                   )
                 ], borderRadius: BorderRadius.all(Radius.circular(15))),
-                child: Image.network(
-                  'https://flagcdn.com/w80/' + currency.countryCode + '.png',
-                  scale: 0.5,
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace? stackTrace) {
-                    return Icon(
-                      Icons.image,
-                      size: 35,
-                      color: Theme.of(context).secondaryHeaderColor,
-                    );
-                  },
-                ),
+                child: _getImage(currency.countryCode),
               ),
               Text(currency.name),
               Text(currency.fullName),
               Text(currency.symbol),
-              Text('Rate to UAN: ' + currency.rateToUah.toString()),
+              Text('Rate : ${currency.rateToUah.toString()} UAH'),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _getImage(String countryCode) {
+    if (countryCode == 'btc') {
+      return Image.network(
+        'https://mundotokens.com/wp-content/uploads/2018/01/bitcoin_.jpg',
+        width: 200,
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return Icon(
+            Icons.image,
+            size: 35,
+            color: Theme.of(context).secondaryHeaderColor,
+          );
+        },
+      );
+    } else {
+      return Image.network(
+        'https://flagcdn.com/w80/' + countryCode + '.png',
+        scale: 0.5,
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return Icon(
+            Icons.image,
+            size: 35,
+            color: Theme.of(context).secondaryHeaderColor,
+          );
+        },
+      );
+    }
   }
 }
