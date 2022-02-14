@@ -54,21 +54,21 @@ class CurrencyCard extends StatelessWidget {
   }
 
   void _onTap(BuildContext context) async {
-    int result = await Navigator.push(
+    int? result = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const SelectableCurrenciesScreen(),
       ),
     );
 
-    if (cardIndex == 0) {
+    if (cardIndex == 0 && result != null) {
       context.read<ConverterProvider>().converter.topCardRate = context
           .read<CurrenciesListProvider>()
           .getCurrencyFromId(result)
           .rateToUah;
 
       context.read<ConverterProvider>().setTopCard(result);
-    } else {
+    } else if (result != null) {
       context.read<ConverterProvider>().converter.bottomCardRate = context
           .read<CurrenciesListProvider>()
           .getCurrencyFromId(result)
