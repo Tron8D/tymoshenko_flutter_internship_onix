@@ -1,7 +1,7 @@
-import 'package:flutter_intership_onix/data/mappers/currency_mapper.dart';
-import 'package:flutter_intership_onix/data/models/currency.dart';
 import 'package:flutter_intership_onix/data/models/data_response.dart';
-import 'package:flutter_intership_onix/data/source/currencies_source.dart';
+import 'package:flutter_intership_onix/data/models/local/currency.dart';
+import 'package:flutter_intership_onix/data/remote/mappers/currency_dio_mapper.dart';
+import 'package:flutter_intership_onix/data/source/remote/currencies_dio_source.dart';
 
 class CurrenciesRepository {
   static Future<DataResponse<List<Currency>>> getCurrenciesList() async {

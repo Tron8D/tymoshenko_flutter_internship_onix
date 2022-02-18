@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:flutter_intership_onix/data/models/data_response.dart';
-import 'package:flutter_intership_onix/data/response/currencies_source_response.dart';
+import 'package:flutter_intership_onix/data/remote/response/currencies_source_response.dart';
 
 class CurrenciesSource {
   final _dio = Dio();

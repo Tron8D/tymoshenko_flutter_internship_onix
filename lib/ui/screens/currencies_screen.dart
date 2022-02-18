@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/data/models/local/currency.dart';
 import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/currencies_list_view.dart';
 import 'package:flutter_intership_onix/ui/widgets/errors/list_error.dart';
 
-class CurrenciesScreen extends StatefulWidget {
+class CurrenciesScreen extends StatelessWidget {
   const CurrenciesScreen({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<CurrenciesScreen> createState() => CurrenciesScreenState();
-}
-
-class CurrenciesScreenState extends State<CurrenciesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,14 +35,16 @@ class CurrenciesScreenState extends State<CurrenciesScreen> {
           } else if (currenciesListProvider.currenciesList.isEmpty) {
             return const Center(child: Text('List empty.'));
           } else {
-            return CurrenciesListView(onTap: _onTap);
+            return CurrenciesListView(onTap: (id) {
+              _onTap(context, id);
+            });
           }
         },
       ),
     );
   }
 
-  void _onTap(id) {
+  void _onTap(BuildContext context, int id) {
     Currency currency =
         context.read<CurrenciesListProvider>().getCurrencyFromId(id);
     Navigator.of(context).pushNamed('/info_card_screen', arguments: currency);

@@ -1,6 +1,6 @@
-import 'package:flutter_intership_onix/data/mappers/rebase_currency.dart';
-import 'package:flutter_intership_onix/data/models/currency.dart';
-import 'package:flutter_intership_onix/data/response/currencies_source_response.dart';
+import 'package:flutter_intership_onix/data/models/local/currency.dart';
+import 'package:flutter_intership_onix/data/remote/mappers/rebase_currency.dart';
+import 'package:flutter_intership_onix/data/remote/response/currencies_source_response.dart';
 
 class CurrencyMapper {
   static List<Currency> mapResponse(List<CurrencySourceResponse> response) {
@@ -112,8 +112,4 @@ class CurrencyMapper {
         }
     }
   }
-
-  // static _getRate(String sale, String baseCcy) {
-  //   if (if)
-  // }
 }

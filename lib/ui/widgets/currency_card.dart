@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/data/models/local/currency.dart';
 import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
 import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
 import 'package:flutter_intership_onix/ui/screens/selectable_currencies_screen.dart';
