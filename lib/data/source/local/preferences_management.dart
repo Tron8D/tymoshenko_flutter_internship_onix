@@ -4,6 +4,7 @@ class PreferencesManagement {
   final String _topCardId = 'top_card_Id';
   final String _bottomCardId = 'bottom_card_Id';
   final String _dark = 'dark';
+  final String _updateTime = '_update_time';
 
   //Load and parse preferences from disk
   Future<SharedPreferences> _getUserPref() async {
@@ -12,40 +13,46 @@ class PreferencesManagement {
 
   //Top card preference control
   Future<void> setTopCardId(int id) async {
-    SharedPreferences preferences = await _getUserPref();
-    preferences.setInt(_topCardId, id);
+    SharedPreferences _preferences = await _getUserPref();
+    _preferences.setInt(_topCardId, id);
   }
 
   Future<int?> getTopCardId() async {
-    SharedPreferences preferences = await _getUserPref();
-    return preferences.getInt(_topCardId);
+    SharedPreferences _preferences = await _getUserPref();
+    return _preferences.getInt(_topCardId);
   }
 
   //Bottom card preference control
   Future<void> setBottomCardId(int id) async {
-    SharedPreferences preferences = await _getUserPref();
-    preferences.setInt(_bottomCardId, id);
+    SharedPreferences _preferences = await _getUserPref();
+    _preferences.setInt(_bottomCardId, id);
   }
 
   Future<int?> getBottomCardId() async {
-    SharedPreferences preferences = await _getUserPref();
-    return preferences.getInt(_bottomCardId);
+    SharedPreferences _preferences = await _getUserPref();
+    return _preferences.getInt(_bottomCardId);
   }
 
   //Theme preference control
   Future<void> setThemeInPref(bool dark) async {
-    SharedPreferences preferences = await _getUserPref();
-    preferences.setBool(_dark, dark);
+    SharedPreferences _preferences = await _getUserPref();
+    _preferences.setBool(_dark, dark);
   }
 
   Future<bool?> getTheme() async {
-    SharedPreferences preferences = await _getUserPref();
-    return preferences.getBool(_dark);
+    SharedPreferences _preferences = await _getUserPref();
+    return _preferences.getBool(_dark);
+  }
+
+  Future<void> setUpdateTime() async {
+    SharedPreferences _preferences = await _getUserPref();
+    String _time = DateTime.now().toIso8601String();
+    _preferences.setString(_updateTime, _time);
   }
 
   //Clear preferences
   Future<void> clearPref() async {
-    SharedPreferences preferences = await _getUserPref();
-    await preferences.clear();
+    SharedPreferences _preferences = await _getUserPref();
+    await _preferences.clear();
   }
 }
