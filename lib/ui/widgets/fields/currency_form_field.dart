@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
 import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
@@ -50,7 +49,6 @@ class CurrencyFormField extends StatelessWidget {
           decoration: InputDecoration(
             suffixText: symbol,
             suffixStyle: TextStyle(
-                fontFamily: GoogleFonts.notoSans().fontFamily,
                 fontSize: 20,
                 color: Theme.of(context).secondaryHeaderColor,
                 textBaseline: TextBaseline.alphabetic),

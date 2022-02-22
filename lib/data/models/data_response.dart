@@ -1,6 +1,7 @@
 class DataResponse<T> {
   T data;
+  DateTime? updateTime;
   String? errorMassage;
 
-  DataResponse(this.data, [this.errorMassage]);
+  DataResponse({required this.data, this.updateTime, this.errorMassage});
 }

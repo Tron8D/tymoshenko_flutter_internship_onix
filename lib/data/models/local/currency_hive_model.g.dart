@@ -17,12 +17,12 @@ class CurrencyHiveModelAdapter extends TypeAdapter<CurrencyHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CurrencyHiveModel(
-      fields[0] as int,
-      fields[1] as String,
-      fields[2] as String,
-      fields[3] as String,
-      fields[4] as double,
-      fields[5] as String,
+      id: fields[0] as int,
+      name: fields[1] as String,
+      fullName: fields[2] as String,
+      symbol: fields[3] as String,
+      rateToUah: fields[4] as double,
+      countryCode: fields[5] as String,
     );
   }
 

@@ -22,12 +22,12 @@ class CurrencyHiveModel {
   @HiveField(5)
   final String countryCode;
 
-  CurrencyHiveModel(
-    this.id,
-    this.name,
-    this.fullName,
-    this.symbol,
-    this.rateToUah,
-    this.countryCode,
-  );
+  CurrencyHiveModel({
+    required this.id,
+    required this.name,
+    required this.fullName,
+    required this.symbol,
+    required this.rateToUah,
+    required this.countryCode,
+  });
 }

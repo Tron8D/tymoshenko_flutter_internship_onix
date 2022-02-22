@@ -2,7 +2,7 @@ import 'package:flutter_intership_onix/data/models/local/currency.dart';
 import 'package:flutter_intership_onix/data/remote/mappers/rebase_currency.dart';
 import 'package:flutter_intership_onix/data/remote/response/currencies_source_response.dart';
 
-class CurrencyMapper {
+class CurrencyDioMapper {
   static List<Currency> mapResponse(List<CurrencySourceResponse> response) {
     List<Currency> _currenciesList = response.map((remoteCurrency) {
       int id = response.indexOf(remoteCurrency) + 1;

@@ -20,12 +20,13 @@ class ThemeProvider extends ChangeNotifier {
     bool? _isDarkPref;
     try {
       _isDarkPref = await _preferencesManagement.getTheme();
+      _isDarkPref ??= isDark;
     } catch (_) {
       _preferencesManagement.setThemeInPref(isDark);
       _isDarkPref = isDark;
     }
     if (_isDarkPref != isDark) {
-      isDark = _isDarkPref!;
+      isDark = _isDarkPref;
       changeThemeData(isDark);
     }
   }
