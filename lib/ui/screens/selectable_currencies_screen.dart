@@ -6,18 +6,11 @@ import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/currencies_list_view.dart';
 import 'package:flutter_intership_onix/ui/widgets/errors/list_error.dart';
 
-class SelectableCurrenciesScreen extends StatefulWidget {
+class SelectableCurrenciesScreen extends StatelessWidget {
   const SelectableCurrenciesScreen({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<SelectableCurrenciesScreen> createState() =>
-      SelectableCurrenciesScreenState();
-}
-
-class SelectableCurrenciesScreenState
-    extends State<SelectableCurrenciesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,12 +34,14 @@ class SelectableCurrenciesScreenState
           } else if (currenciesListProvider.currenciesList.isEmpty) {
             return const Center(child: Text('List empty.'));
           } else {
-            return CurrenciesListView(onTap: _onTap);
+            return CurrenciesListView(onTap: (int id) {
+              _onTap(context, id);
+            });
           }
         },
       ),
     );
   }
 
-  void _onTap(int id) => Navigator.pop(context, id);
+  void _onTap(BuildContext context, int id) => Navigator.pop(context, id);
 }

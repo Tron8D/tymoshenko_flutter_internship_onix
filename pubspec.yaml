@@ -23,12 +23,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: 2.2.0
   flutter_svg: ^1.0.1
   shared_preferences: ^2.0.12
   provider: ^6.0.2
   dio: ^4.0.4
   json_annotation: ^4.4.0
+  hive: ^2.0.5
+  hive_flutter: ^1.1.0
+  hive_generator: ^1.1.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -59,6 +61,13 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
       - assets/icons/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+          - asset: assets/fonts/Montserrat-Regular.ttf
+
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_intership_onix/data/source/preferences_management.dart';
+import 'package:flutter_intership_onix/data/source/local/preferences_management.dart';
 import 'package:flutter_intership_onix/ui/themes/dark_theme_data.dart';
 import 'package:flutter_intership_onix/ui/themes/light_theme_data.dart';
 
@@ -20,12 +20,13 @@ class ThemeProvider extends ChangeNotifier {
     bool? _isDarkPref;
     try {
       _isDarkPref = await _preferencesManagement.getTheme();
+      _isDarkPref ??= isDark;
     } catch (_) {
       _preferencesManagement.setThemeInPref(isDark);
       _isDarkPref = isDark;
     }
     if (_isDarkPref != isDark) {
-      isDark = _isDarkPref!;
+      isDark = _isDarkPref;
       changeThemeData(isDark);
     }
   }

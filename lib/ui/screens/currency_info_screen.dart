@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/data/models/local/currency.dart';
 
 class CurrencyInfoScreen extends StatelessWidget {
   const CurrencyInfoScreen({Key? key}) : super(key: key);

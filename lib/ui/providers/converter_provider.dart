@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_intership_onix/data/models/converter.dart';
-import 'package:flutter_intership_onix/data/source/preferences_management.dart';
+import 'package:flutter_intership_onix/data/models/local/converter.dart';
+import 'package:flutter_intership_onix/data/source/local/preferences_management.dart';
 
 class ConverterProvider extends ChangeNotifier {
   final PreferencesManagement _preferencesManagement = PreferencesManagement();

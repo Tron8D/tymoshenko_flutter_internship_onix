@@ -1,4 +1,4 @@
-import 'package:flutter_intership_onix/data/models/currency.dart';
+import 'package:flutter_intership_onix/data/models/local/currency.dart';
 
 //in response BTC base currency is USD. Rebase USD to UAH
 class RebaseCurrency {
