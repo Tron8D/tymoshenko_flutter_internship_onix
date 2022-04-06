@@ -7,6 +7,7 @@ class CurrenciesRepository {
   static Future<DataResponse<List<Currency>>> getCurrenciesList(
       DateTime? lastUpdate, String? updateInterval) async {
     int _timeToUpdate = _getTimeToUpdate(updateInterval);
+    print(_timeToUpdate);
     late int _differenceTime;
 
     //On first start program

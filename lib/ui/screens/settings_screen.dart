@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
-import 'package:flutter_intership_onix/ui/providers/theme_provider.dart';
+import 'package:flutter_intership_onix/ui/bloc/theme_bloc/theme_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -12,10 +11,12 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late bool _darkTheme = context.read<ThemeProvider>().isDark;
+  late bool _darkTheme = BlocProvider.of<ThemeBloc>(context).isDark;
+  // late bool _darkTheme = context.read<ThemeProvider>().isDark;
   List<String> items = ['15 sec', '30 sec', '1 min'];
-  late String value =
-      context.read<CurrenciesListProvider>().updateInterval ?? items.first;
+  late String value = '15 sec';
+  // late String value =
+  //     context.read<CurrenciesListProvider>().updateInterval ?? items.first;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: const Text('Dark theme'),
               value: _darkTheme,
               onChanged: _onChanged,
-              controlAffinity: ListTileControlAffinity.leading,
+              // controlAffinity: ListTileControlAffinity.leading,
             ),
             ListTile(
               title: const Text('Update interval: '),
@@ -53,9 +54,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onChanged: (newValue) {
                   setState(() {
                     value = newValue!;
-                    context
-                        .read<CurrenciesListProvider>()
-                        .setUpdateInterval(newValue);
+                    // context
+                    //     .read<CurrenciesListProvider>()
+                    //     .setUpdateInterval(newValue);
                   });
                 },
               ),
@@ -73,6 +74,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _onChanged(bool? value) async {
     _darkTheme = value!;
-    context.read<ThemeProvider>().changeThemeData(value);
+    BlocProvider.of<ThemeBloc>(context).add(ChangeTheme());
+    // context.read<ThemeProvider>().changeThemeData(value);
+    setState(() {});
   }
 }
