@@ -9,8 +9,14 @@ class CurrenciesListLoading extends CurrenciesListState {}
 
 class CurrenciesListLoaded extends CurrenciesListState {
   final List<Currency> currencies;
+  final Currency currencyFromId;
+  final String? updateInterval;
 
-  CurrenciesListLoaded({required this.currencies});
+  CurrenciesListLoaded({
+    required this.currencies,
+    required this.currencyFromId,
+    required this.updateInterval,
+  });
 }
 
 class CurrenciesListError extends CurrenciesListState {

@@ -29,8 +29,8 @@ class CurrenciesHiveSource {
         CurrencyHiveMapper.mapList(currenciesList);
     var _currenciesBox = await Hive.openBox<CurrencyHiveModel>(_boxName);
 
-    _currenciesBox.clear();
-    _currenciesBox.addAll(_currencyListForHive);
-    _currenciesBox.close();
+    await _currenciesBox.clear();
+    await _currenciesBox.addAll(_currencyListForHive);
+    await _currenciesBox.close();
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_intership_onix/data/source/local/preferences_management.dart';
@@ -17,16 +15,19 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   ThemeData darkTheme = darkThemeData();
 
   ThemeBloc() : super(ThemeInitial()) {
-    on<LoadPref>((event, emit) => _loadFromPref(emit));
+    on<ThemeLoadPref>((event, emit) => _loadFromPref(emit));
+    on<ThemePrefLoaded>((event, emit) => _themePrefLoaded(emit));
     on<ChangeTheme>((event, emit) => _changeThemeData(emit));
 
-    add(LoadPref());
+    add(ThemeLoadPref());
   }
 
   void _loadFromPref(Emitter<ThemeState> emit) async {
+    print('theme pref');
     bool? _isDarkPref;
     try {
       _isDarkPref = await _preferencesManagement.getTheme();
+      print('_isDarkPref: $_isDarkPref');
       _isDarkPref ??= isDark;
     } catch (_) {
       _preferencesManagement.setThemeInPref(isDark);
@@ -34,13 +35,19 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     }
     if (_isDarkPref != isDark) {
       isDark = _isDarkPref;
+      print('isDark: $isDark');
     }
     emit(ThemeFirstLoaded());
+  }
+
+  void _themePrefLoaded(Emitter emit) {
+    emit(ThemeLoaded(isDark: isDark));
   }
 
   void _changeThemeData(Emitter<ThemeState> emit) {
     isDark = !isDark;
     _preferencesManagement.setThemeInPref(isDark);
-    emit(ThemeChanged());
+    print('isDarkPrefSave: $isDark');
+    emit(ThemeLoaded(isDark: isDark));
   }
 }

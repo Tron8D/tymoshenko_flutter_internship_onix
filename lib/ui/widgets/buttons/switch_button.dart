@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_intership_onix/ui/bloc/converter_bloc/converter_bloc.dart';
 
 class SwitchButton extends StatelessWidget {
   const SwitchButton({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class SwitchButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: () {
-        // context.read<ConverterProvider>().switchCard();
+        context.read<ConverterBloc>().add(SwitchCards());
       },
       child: const Text(
         'Switch currencies',

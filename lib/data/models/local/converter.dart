@@ -1,7 +1,7 @@
 class Converter {
   int topCardId;
   int bottomCardId;
-  double inputValue = 0;
+  double? inputValue;
   double convertedValue = 0;
   double topCardRate = 1;
   double bottomCardRate = 1;

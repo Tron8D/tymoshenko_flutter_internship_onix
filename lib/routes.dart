@@ -9,7 +9,5 @@ Map<String, WidgetBuilder> routes = {
   '/': (context) => const SplashScreen(),
   '/main': (context) => const MainScreen(),
   '/settings': (context) => const SettingsScreen(),
-  // '/selectable_change_currency': (context) =>
-  //     const SelectableCurrenciesScreen(),
-  // '/info_card_screen': (context) => const CurrencyInfoScreen(),
+  '/info_card_screen': (context) => const CurrencyInfoScreen(),
 };

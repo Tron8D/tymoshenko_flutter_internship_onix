@@ -12,27 +12,44 @@ part 'currencies_list_state.dart';
 class CurrenciesListBloc
     extends Bloc<CurrenciesListEvent, CurrenciesListState> {
   final PreferencesManagement _preferencesManagement = PreferencesManagement();
-  bool isLoading = true;
   String? error;
   List<Currency> currenciesList = [];
+  Currency currencyFromId = Currency(
+      id: 0,
+      name: 'name',
+      fullName: 'fullName',
+      symbol: 'symbol',
+      rateToUah: 1,
+      countryCode: 'countryCode');
+
   late DateTime? _updateTime;
   late String? updateInterval;
 
   CurrenciesListBloc() : super(CurrenciesListInitial()) {
     on<LoadPref>((event, emit) async {
       await _getPreference();
-      getCurrenciesList(emit);
+      return _getCurrenciesList(emit);
     });
-    on<GetCurrenciesList>((event, emit) => getCurrenciesList(emit));
+    on<GetCurrenciesList>(
+      (event, emit) => _getCurrenciesList(emit),
+    );
+    on<GetCurrencyForInfo>(
+      (event, emit) => _getCurrencyForInfo(emit, event.id),
+    );
+    on<SetUpdateInterval>(
+      (event, emit) => setUpdateInterval(emit, event.updateInterval),
+    );
 
     add(LoadPref());
-    // add(GetCurrenciesList());
   }
 
-  void getCurrenciesList(Emitter<CurrenciesListState> emit) async {
+  Future<void> _getPreference() async {
+    _updateTime = await _preferencesManagement.getUpdateTime();
+    updateInterval = await _preferencesManagement.getUpdateInterval();
+  }
+
+  void _getCurrenciesList(Emitter<CurrenciesListState> emit) async {
     emit(CurrenciesListLoading());
-    print(_updateTime);
-    print(updateInterval);
     var remoteCurrencyList = await CurrenciesRepository.getCurrenciesList(
         _updateTime, updateInterval);
 
@@ -40,7 +57,14 @@ class CurrenciesListBloc
       currenciesList = remoteCurrencyList.data;
       _updateTime = remoteCurrencyList.updateTime;
       await _preferencesManagement.setUpdateTime(_updateTime!);
-      emit(CurrenciesListLoaded(currencies: remoteCurrencyList.data));
+
+      currenciesList.isEmpty
+          ? emit(CurrenciesListError(errorMassage: 'List empty.'))
+          : emit(CurrenciesListLoaded(
+              currencies: remoteCurrencyList.data,
+              currencyFromId: currencyFromId,
+              updateInterval: updateInterval,
+            ));
     } else {
       error = remoteCurrencyList.errorMassage;
       currenciesList = remoteCurrencyList.data;
@@ -48,38 +72,32 @@ class CurrenciesListBloc
     }
   }
 
-  Currency getCurrencyFromId(Emitter<CurrenciesListState> emit, int id) {
+  void _getCurrencyForInfo(Emitter<CurrenciesListState> emit, int id) {
     if (currenciesList.isNotEmpty) {
-      return currenciesList.firstWhere((element) => (element.id == id));
+      currencyFromId =
+          currenciesList.firstWhere((element) => (element.id == id));
+
+      emit(CurrenciesListLoaded(
+        currencies: currenciesList,
+        currencyFromId: currencyFromId,
+        updateInterval: updateInterval,
+      ));
     } else {
       error = 'Error: No element';
-      // notifyListeners();
-
-      return Currency(
-          id: 0,
-          name: 'name',
-          fullName: 'fullName',
-          symbol: 'symbol',
-          rateToUah: 1,
-          countryCode: 'countryCode');
+      emit(CurrenciesListError(errorMassage: error!));
     }
   }
 
-  void _startProvider(Emitter<CurrenciesListState> emit) async {
-    _getPreference().then((value) => getCurrenciesList(emit));
-  }
-
-  Future<void> _getPreference() async {
-    _updateTime = await _preferencesManagement.getUpdateTime();
-    print(_updateTime);
-    updateInterval = await _preferencesManagement.getUpdateInterval();
-    updateInterval ??= '15';
-    print(updateInterval);
-    // emit(CurrenciesListLoading());
-  }
-
-  void setUpdateInterval(String interval) {
+  void setUpdateInterval(Emitter emit, String interval) {
     updateInterval = interval;
     _preferencesManagement.setUpdateInterval(interval);
+    emit(CurrenciesListLoaded(
+        currencies: currenciesList,
+        currencyFromId: currencyFromId,
+        updateInterval: updateInterval));
+  }
+
+  void clearPref() {
+    _preferencesManagement.clearPref();
   }
 }

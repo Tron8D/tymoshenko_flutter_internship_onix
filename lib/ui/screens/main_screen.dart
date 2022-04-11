@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_intership_onix/ui/bloc/theme_bloc/theme_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:flutter_intership_onix/ui/screens/converter_screen.dart';
@@ -15,6 +13,21 @@ class MainScreen extends StatefulWidget {
 
 class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _screenList[_selectedIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).secondaryHeaderColor,
+        items: _items,
+        currentIndex: _selectedIndex,
+        onTap: changeIndex,
+      ),
+    );
+  }
 
   //List of screens for bottom navigation bar
   final List<Widget> _screenList = [
@@ -57,26 +70,5 @@ class MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = _newIndex;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        // child: ElevatedButton(
-        //   onPressed: () {
-        //     BlocProvider.of<ThemeBloc>(context).add(ChangeTheme());
-        //   },
-        //   child: Text('Change'),
-        // ),
-        child: _screenList[_selectedIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).secondaryHeaderColor,
-        items: _items,
-        currentIndex: _selectedIndex,
-        onTap: changeIndex,
-      ),
-    );
   }
 }

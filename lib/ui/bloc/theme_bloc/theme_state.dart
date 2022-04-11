@@ -7,4 +7,8 @@ class ThemeInitial extends ThemeState {}
 
 class ThemeFirstLoaded extends ThemeState {}
 
-class ThemeChanged extends ThemeState {}
+class ThemeLoaded extends ThemeState {
+  final bool isDark;
+
+  ThemeLoaded({required this.isDark});
+}

@@ -5,12 +5,12 @@ import 'package:flutter_intership_onix/ui/widgets/currency_list_tile.dart';
 import 'package:flutter_intership_onix/utils/utils.dart';
 
 class CurrenciesListView extends StatelessWidget {
-  // final ListTileCallback onTap;
+  final ListTileCallback onTap;
   final List<Currency> currenciesList;
 
   const CurrenciesListView({
     Key? key,
-    // required this.onTap,
+    required this.onTap,
     required this.currenciesList,
   }) : super(key: key);
 
@@ -20,10 +20,8 @@ class CurrenciesListView extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       itemBuilder: (context, index) {
         return CurrencyListTile(
-          // onTap: onTap,
-          onTap: (index) {},
+          onTap: onTap,
           currency: currenciesList[index],
-          // context.read<CurrenciesListProvider>().currenciesList[index],
         );
       },
       separatorBuilder: (context, index) {
