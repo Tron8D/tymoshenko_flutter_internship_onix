@@ -29,7 +29,7 @@ class CurrenciesRepository {
     if (response.errorMassage == null) {
       var currenciesList = response.data;
 
-      CurrenciesHiveSource.saveCurrencies(currenciesList);
+      await CurrenciesHiveSource.saveCurrencies(currenciesList);
       return DataResponse(
           data: List.from(currenciesList), updateTime: response.updateTime);
     } else {
@@ -49,9 +49,13 @@ class CurrenciesRepository {
     if (_hiveResponse.errorMassage == null) {
       var currenciesList = _hiveResponse.data;
 
-      return DataResponse(
-          data: List.from(currenciesList),
-          updateTime: _hiveResponse.updateTime);
+      if (_hiveResponse.data.isEmpty) {
+        return DataResponse(data: [], errorMassage: 'List empty.');
+      } else {
+        return DataResponse(
+            data: List.from(currenciesList),
+            updateTime: _hiveResponse.updateTime);
+      }
     } else {
       return DataResponse(data: [], errorMassage: _hiveResponse.errorMassage);
     }

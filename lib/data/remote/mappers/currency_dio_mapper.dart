@@ -5,7 +5,7 @@ import 'package:flutter_intership_onix/data/remote/response/currencies_source_re
 class CurrencyDioMapper {
   static List<Currency> mapResponse(List<CurrencySourceResponse> response) {
     List<Currency> _currenciesList = response.map((remoteCurrency) {
-      int id = response.indexOf(remoteCurrency) + 1;
+      int id = response.indexOf(remoteCurrency);
       return Currency(
         id: id,
         rateToUah: double.tryParse(remoteCurrency.sale) ?? 0,
@@ -16,7 +16,7 @@ class CurrencyDioMapper {
       );
     }).toList();
     _currenciesList.add(Currency(
-      id: _currenciesList.length + 1,
+      id: _currenciesList.length,
       rateToUah: 1,
       name: 'UAH',
       fullName: _getFullName('UAH'),

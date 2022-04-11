@@ -37,14 +37,14 @@ class ConverterProvider extends ChangeNotifier {
   Future<void> setTopCard(int id) async {
     await _preferencesManagement.setTopCardId(id);
     converter.topCardId = id;
-    convertValue(converter.inputValue);
+    convertValue(converter.inputValue ?? 0);
     notifyListeners();
   }
 
   Future<void> setBottomCard(int id) async {
     await _preferencesManagement.setBottomCardId(id);
     converter.bottomCardId = id;
-    convertValue(converter.inputValue);
+    convertValue(converter.inputValue ?? 0);
     notifyListeners();
   }
 

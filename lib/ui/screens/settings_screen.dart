@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
-import 'package:flutter_intership_onix/ui/providers/theme_provider.dart';
+import 'package:flutter_intership_onix/ui/bloc/currencies_list_bloc/currencies_list_bloc.dart';
+import 'package:flutter_intership_onix/ui/bloc/theme_bloc/theme_bloc.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -12,10 +12,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late bool _darkTheme = context.read<ThemeProvider>().isDark;
   List<String> items = ['15 sec', '30 sec', '1 min'];
   late String value =
-      context.read<CurrenciesListProvider>().updateInterval ?? items.first;
+      context.read<CurrenciesListBloc>().updateInterval ?? items.first;
 
   @override
   Widget build(BuildContext context) {
@@ -38,28 +37,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: Center(
         child: Column(
           children: [
-            CheckboxListTile(
-              activeColor: Theme.of(context).secondaryHeaderColor,
-              title: const Text('Dark theme'),
-              value: _darkTheme,
-              onChanged: _onChanged,
-              controlAffinity: ListTileControlAffinity.leading,
+            BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                if (state is ThemeLoaded) {
+                  return CheckboxListTile(
+                    activeColor: Theme.of(context).secondaryHeaderColor,
+                    title: const Text('Dark theme'),
+                    value: state.isDark,
+                    onChanged: (_) {
+                      context.read<ThemeBloc>().add(ChangeTheme());
+                    },
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
             ),
-            ListTile(
-              title: const Text('Update interval: '),
-              trailing: DropdownButton<String>(
-                value: value,
-                items: items.map(_menuItem).toList(),
-                onChanged: (newValue) {
-                  setState(() {
-                    value = newValue!;
-                    context
-                        .read<CurrenciesListProvider>()
-                        .setUpdateInterval(newValue);
-                  });
-                },
-              ),
-            )
+            BlocBuilder<CurrenciesListBloc, CurrenciesListState>(
+              builder: (context, state) {
+                if (state is CurrenciesListLoaded) {
+                  return ListTile(
+                    title: const Text('Update interval: '),
+                    trailing: DropdownButton<String>(
+                        value: state.updateInterval ?? items.first,
+                        items: items.map(_menuItem).toList(),
+                        onChanged: (newValue) {
+                          context.read<CurrenciesListBloc>().add(
+                              SetUpdateInterval(
+                                  updateInterval: newValue ?? items.first));
+                        }),
+                  );
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
           ],
         ),
       ),
@@ -70,9 +82,4 @@ class _SettingsScreenState extends State<SettingsScreen> {
       DropdownMenuItem<String>(value: item, child: Text(item));
 
   void _onSave() => Navigator.pop(context);
-
-  void _onChanged(bool? value) async {
-    _darkTheme = value!;
-    context.read<ThemeProvider>().changeThemeData(value);
-  }
 }

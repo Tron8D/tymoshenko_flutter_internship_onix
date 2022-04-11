@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_intership_onix/data/models/local/currency_hive_model.dart';
-import 'package:flutter_intership_onix/routes.dart';
-import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
-import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
-import 'package:flutter_intership_onix/ui/providers/theme_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:provider/provider.dart';
+
+import 'package:flutter_intership_onix/routes.dart';
+import 'package:flutter_intership_onix/ui/bloc/converter_bloc/converter_bloc.dart';
+import 'package:flutter_intership_onix/ui/bloc/currencies_list_bloc/currencies_list_bloc.dart';
+import 'package:flutter_intership_onix/ui/bloc/theme_bloc/theme_bloc.dart';
+import 'package:flutter_intership_onix/data/models/local/currency_hive_model.dart';
 
 void main() async {
   await Hive.initFlutter();
@@ -19,25 +20,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // userSettings.preferencesManagement.clearPref();
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider<CurrenciesListProvider>(
-            create: (context) => CurrenciesListProvider()),
-        ChangeNotifierProvider<ConverterProvider>(
-            create: (context) => ConverterProvider()),
-        ChangeNotifierProvider(
-          create: (context) => ThemeProvider(),
-        )
+        BlocProvider(
+          create: (BuildContext context) => CurrenciesListBloc(),
+          lazy: false,
+        ),
+        BlocProvider(
+          create: (BuildContext context) => ConverterBloc(),
+          lazy: false,
+        ),
+        BlocProvider(create: (BuildContext context) => ThemeBloc()),
       ],
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) {
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
           return MaterialApp(
-            title: 'Flutter lesson 9',
+            title: 'Flutter lesson 10',
             debugShowCheckedModeBanner: false,
-            theme: themeProvider.lightTheme,
-            darkTheme: themeProvider.darkTheme,
-            themeMode: context.watch<ThemeProvider>().userThemeMode,
+            theme: context.read<ThemeBloc>().lightTheme,
+            darkTheme: context.read<ThemeBloc>().darkTheme,
+            themeMode: context.read<ThemeBloc>().isDark
+                ? ThemeMode.dark
+                : ThemeMode.light,
             initialRoute: "/",
             routes: routes,
           );

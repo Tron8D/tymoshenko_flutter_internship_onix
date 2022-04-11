@@ -14,6 +14,21 @@ class MainScreen extends StatefulWidget {
 class MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: _screenList[_selectedIndex],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Theme.of(context).secondaryHeaderColor,
+        items: _items,
+        currentIndex: _selectedIndex,
+        onTap: changeIndex,
+      ),
+    );
+  }
+
   //List of screens for bottom navigation bar
   final List<Widget> _screenList = [
     const ConverterScreen(),
@@ -55,20 +70,5 @@ class MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = _newIndex;
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _screenList[_selectedIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Theme.of(context).secondaryHeaderColor,
-        items: _items,
-        currentIndex: _selectedIndex,
-        onTap: changeIndex,
-      ),
-    );
   }
 }

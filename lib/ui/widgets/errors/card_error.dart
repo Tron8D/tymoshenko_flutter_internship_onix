@@ -22,7 +22,7 @@ class CardError extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(20),
             height: 200,
-            child: Text(error),
+            child: Center(child: Text(error)),
           ),
         ),
       ),

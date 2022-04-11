@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_intership_onix/data/models/local/currency.dart';
-import 'package:flutter_intership_onix/ui/providers/converter_provider.dart';
-import 'package:flutter_intership_onix/ui/providers/currencies_list_provider.dart';
+import 'package:flutter_intership_onix/ui/bloc/converter_bloc/converter_bloc.dart';
 import 'package:flutter_intership_onix/ui/screens/selectable_currencies_screen.dart';
 import 'package:flutter_intership_onix/ui/widgets/currency_list_tile.dart';
 import 'package:flutter_intership_onix/ui/widgets/fields/currency_form_field.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_intership_onix/ui/widgets/fields/currency_form_field.dar
 class CurrencyCard extends StatelessWidget {
   final int cardIndex;
   final Currency currency;
+  final TextEditingController controller;
   final bool readOnly;
 
   const CurrencyCard({
@@ -18,6 +18,7 @@ class CurrencyCard extends StatelessWidget {
     required this.currency,
     required this.readOnly,
     required this.cardIndex,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -36,13 +37,12 @@ class CurrencyCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CurrencyListTile(
-                onTap: (_) => _onTap(context),
+                onTap: (_) => _pushScreenOnTap(context),
                 currency: currency,
               ),
               CurrencyFormField(
                 indexTextFormField: cardIndex,
-                controller: _selectController(context),
-                initialValue: _selectInitialValue(context),
+                controller: controller,
                 readOnly: readOnly,
                 symbol: currency.symbol,
               ),
@@ -53,44 +53,20 @@ class CurrencyCard extends StatelessWidget {
     );
   }
 
-  void _onTap(BuildContext context) async {
-    int? result = await Navigator.push(
+  //push screen for select card
+  void _pushScreenOnTap(BuildContext context) {
+    Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const SelectableCurrenciesScreen(),
+        builder: (context) => SelectableCurrenciesScreen(
+            onTap: (id) => _setCardOnTap(context, id)),
       ),
     );
-
-    if (cardIndex == 0 && result != null) {
-      context.read<ConverterProvider>().converter.topCardRate = context
-          .read<CurrenciesListProvider>()
-          .getCurrencyFromId(result)
-          .rateToUah;
-
-      context.read<ConverterProvider>().setTopCard(result);
-    } else if (result != null) {
-      context.read<ConverterProvider>().converter.bottomCardRate = context
-          .read<CurrenciesListProvider>()
-          .getCurrencyFromId(result)
-          .rateToUah;
-
-      context.read<ConverterProvider>().setBottomCard(result);
-    }
   }
 
-  double _selectInitialValue(BuildContext context) {
-    if (cardIndex == 0) {
-      return context.watch<ConverterProvider>().converter.inputValue;
-    } else {
-      return context.watch<ConverterProvider>().converter.convertedValue;
-    }
-  }
-
-  TextEditingController _selectController(BuildContext context) {
-    if (cardIndex == 0) {
-      return context.watch<ConverterProvider>().topCardController;
-    } else {
-      return context.watch<ConverterProvider>().bottomCardController;
-    }
+  //send event to  bloc for set card
+  void _setCardOnTap(BuildContext context, int id) {
+    context.read<ConverterBloc>().add(SetCardId(cardIndex: cardIndex, id: id));
+    Navigator.pop(context, id);
   }
 }
