@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_intership_onix/ui/bloc/currencies_list_bloc/currencies_list_bloc.dart';
 
-import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/currencies_list_view.dart';
 import 'package:flutter_intership_onix/ui/widgets/errors/list_error.dart';
 import 'package:flutter_intership_onix/utils/utils.dart';
@@ -27,7 +26,6 @@ class SelectableCurrenciesScreen extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
-        actions: const [SettingsButton()],
       ),
       body: BlocBuilder<CurrenciesListBloc, CurrenciesListState>(
         builder: (context, state) {

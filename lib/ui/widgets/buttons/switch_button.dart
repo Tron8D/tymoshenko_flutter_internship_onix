@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_intership_onix/ui/bloc/converter_bloc/converter_bloc.dart';
 
 class SwitchButton extends StatelessWidget {
-  const SwitchButton({Key? key}) : super(key: key);
+  final VoidCallback onPressed;
+
+  const SwitchButton({required this.onPressed, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      onPressed: () {
-        context.read<ConverterBloc>().add(SwitchCards());
-      },
+      onPressed: onPressed,
       child: const Text(
         'Switch currencies',
         style: TextStyle(color: Colors.white),

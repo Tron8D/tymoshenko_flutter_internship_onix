@@ -23,11 +23,9 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   }
 
   void _loadFromPref(Emitter<ThemeState> emit) async {
-    print('theme pref');
     bool? _isDarkPref;
     try {
       _isDarkPref = await _preferencesManagement.getTheme();
-      print('_isDarkPref: $_isDarkPref');
       _isDarkPref ??= isDark;
     } catch (_) {
       _preferencesManagement.setThemeInPref(isDark);
@@ -35,7 +33,6 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     }
     if (_isDarkPref != isDark) {
       isDark = _isDarkPref;
-      print('isDark: $isDark');
     }
     emit(ThemeFirstLoaded());
   }
@@ -47,7 +44,6 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   void _changeThemeData(Emitter<ThemeState> emit) {
     isDark = !isDark;
     _preferencesManagement.setThemeInPref(isDark);
-    print('isDarkPrefSave: $isDark');
     emit(ThemeLoaded(isDark: isDark));
   }
 }

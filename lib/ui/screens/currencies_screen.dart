@@ -6,10 +6,28 @@ import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/currencies_list_view.dart';
 import 'package:flutter_intership_onix/ui/widgets/errors/list_error.dart';
 
-class CurrenciesScreen extends StatelessWidget {
+class CurrenciesScreen extends StatefulWidget {
   const CurrenciesScreen({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<CurrenciesScreen> createState() => _CurrenciesScreenState();
+}
+
+class _CurrenciesScreenState extends State<CurrenciesScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationSettingsBtnController;
+  late Animation<double> _animationRotateButton;
+
+  @override
+  void initState() {
+    _animationSettingsBtnController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+    _animationRotateButton = CurvedAnimation(
+        parent: _animationSettingsBtnController, curve: Curves.easeInOutCirc);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +42,14 @@ class CurrenciesScreen extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
-        actions: const [SettingsButton()],
+        actions: [
+          RotationTransition(
+            turns: _animationRotateButton,
+            child: SettingsButton(
+              animationController: _animationSettingsBtnController,
+            ),
+          )
+        ],
       ),
       body: BlocBuilder<CurrenciesListBloc, CurrenciesListState>(
         builder: (context, state) {
