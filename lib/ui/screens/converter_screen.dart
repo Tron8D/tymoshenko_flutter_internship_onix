@@ -17,7 +17,61 @@ class ConverterScreen extends StatefulWidget {
   State<ConverterScreen> createState() => _ConverterScreenState();
 }
 
-class _ConverterScreenState extends State<ConverterScreen> {
+class _ConverterScreenState extends State<ConverterScreen>
+    with TickerProviderStateMixin {
+  late AnimationController _animationScreenController;
+  late AnimationController _animationSettingsBtnController;
+  late Animation<Offset> _animationMoveTopCard;
+  late Animation<Offset> _animationMoveBottomCard;
+  late Animation<double> _animationFadeButton;
+  late Animation<double> _animationRotateButton;
+  late Tween<Offset> topTween;
+  late Tween<Offset> bottomTween;
+  late Offset? topOffset;
+
+  @override
+  void initState() {
+    _animationScreenController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _animationSettingsBtnController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
+
+    topTween = Tween<Offset>(begin: const Offset(-1.1, 0), end: Offset.zero);
+    bottomTween = Tween<Offset>(begin: const Offset(1.1, 0), end: Offset.zero);
+
+    _animationMoveTopCard = topTween.animate(CurvedAnimation(
+        parent: _animationScreenController, curve: Curves.elasticInOut))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          topTween.begin = const Offset(1.1, 0);
+        } else if (status == AnimationStatus.dismissed) {
+          topTween.begin = const Offset(-1.1, 0);
+        }
+      });
+    _animationMoveBottomCard = bottomTween.animate(CurvedAnimation(
+        parent: _animationScreenController, curve: Curves.elasticInOut))
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          bottomTween.begin = const Offset(-1.1, 0);
+        } else if (status == AnimationStatus.dismissed) {
+          bottomTween.begin = const Offset(1.1, 0);
+        }
+      });
+    _animationFadeButton = CurvedAnimation(
+        parent: _animationScreenController,
+        curve: const Interval(0.5, 1, curve: Curves.ease));
+    _animationRotateButton = CurvedAnimation(
+        parent: _animationSettingsBtnController, curve: Curves.easeInOutCirc);
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationScreenController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +82,14 @@ class _ConverterScreenState extends State<ConverterScreen> {
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
-        actions: const [SettingsButton()],
+        actions: [
+          RotationTransition(
+            turns: _animationRotateButton,
+            child: SettingsButton(
+              animationController: _animationSettingsBtnController,
+            ),
+          ),
+        ],
       ),
       body: BlocBuilder<ConverterBloc, ConverterState>(
         builder: (context, converterState) {
@@ -37,7 +98,14 @@ class _ConverterScreenState extends State<ConverterScreen> {
               _showCards(0, converterState.converter,
                   converterState.topCardController),
               const SizedBox(height: 5),
-              const Center(child: SwitchButton()),
+              Center(
+                child: FadeTransition(
+                  opacity: _animationFadeButton,
+                  child: SwitchButton(onPressed: () {
+                    _onPressed(_animationScreenController);
+                  }),
+                ),
+              ),
               const SizedBox(height: 5),
               _showCards(1, converterState.converter,
                   converterState.bottomCardController),
@@ -48,6 +116,12 @@ class _ConverterScreenState extends State<ConverterScreen> {
         },
       ),
     );
+  }
+
+  void _onPressed(AnimationController animationController) {
+    animationController
+        .reverse()
+        .then((value) => context.read<ConverterBloc>().add(SwitchCards()));
   }
 
   //widget for build cards
@@ -83,11 +157,19 @@ class _ConverterScreenState extends State<ConverterScreen> {
                   rate: currency.rateToUah,
                 ));
           }
-          return CurrencyCard(
-            cardIndex: cardIndex,
-            readOnly: cardIndex == 0 ? false : true,
-            controller: controller,
-            currency: currency,
+          if (!_animationScreenController.isAnimating) {
+            _animationScreenController.forward();
+          }
+          return SlideTransition(
+            position: cardIndex == 0
+                ? _animationMoveTopCard
+                : _animationMoveBottomCard,
+            child: CurrencyCard(
+              cardIndex: cardIndex,
+              readOnly: cardIndex == 0 ? false : true,
+              controller: controller,
+              currency: currency,
+            ),
           );
         } else {
           return const Center(child: CircularProgressIndicator());
