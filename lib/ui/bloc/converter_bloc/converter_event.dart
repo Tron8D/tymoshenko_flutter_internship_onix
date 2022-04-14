@@ -3,7 +3,11 @@ part of 'converter_bloc.dart';
 @immutable
 abstract class ConverterEvent {}
 
-class ConverterLoadPref extends ConverterEvent {}
+class ConverterLoadPref extends ConverterEvent {
+  final String uid;
+
+  ConverterLoadPref({required this.uid});
+}
 
 class SwitchCards extends ConverterEvent {}
 

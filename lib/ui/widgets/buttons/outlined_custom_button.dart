@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
-class SwitchButton extends StatelessWidget {
+class OutlinedCustomButton extends StatelessWidget {
+  final String title;
   final VoidCallback onPressed;
 
-  const SwitchButton({required this.onPressed, Key? key}) : super(key: key);
+  const OutlinedCustomButton(
+      {required this.title, required this.onPressed, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       onPressed: onPressed,
-      child: const Text(
-        'Switch currencies',
-        style: TextStyle(color: Colors.white),
+      child: Text(
+        title,
+        style: const TextStyle(color: Colors.white),
       ),
       style: ButtonStyle(
         backgroundColor:

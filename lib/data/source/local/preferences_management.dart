@@ -1,8 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesManagement {
-  final String _topCardId = 'top_card_Id';
-  final String _bottomCardId = 'bottom_card_Id';
   final String _dark = 'dark';
   final String _updateTime = '_update_time';
   final String _updateInterval = '_update_interval';
@@ -10,28 +8,6 @@ class PreferencesManagement {
   //Load and parse preferences from disk
   Future<SharedPreferences> _getUserPref() async {
     return await SharedPreferences.getInstance();
-  }
-
-  //Top card preference control
-  Future<void> setTopCardId(int id) async {
-    SharedPreferences _preferences = await _getUserPref();
-    _preferences.setInt(_topCardId, id);
-  }
-
-  Future<int?> getTopCardId() async {
-    SharedPreferences _preferences = await _getUserPref();
-    return _preferences.getInt(_topCardId);
-  }
-
-  //Bottom card preference control
-  Future<void> setBottomCardId(int id) async {
-    SharedPreferences _preferences = await _getUserPref();
-    _preferences.setInt(_bottomCardId, id);
-  }
-
-  Future<int?> getBottomCardId() async {
-    SharedPreferences _preferences = await _getUserPref();
-    return _preferences.getInt(_bottomCardId);
   }
 
   //Theme preference control

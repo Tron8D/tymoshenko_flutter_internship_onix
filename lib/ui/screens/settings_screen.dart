@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_intership_onix/ui/bloc/auth_bloc/auth_bloc.dart';
 
 import 'package:flutter_intership_onix/ui/bloc/currencies_list_bloc/currencies_list_bloc.dart';
 import 'package:flutter_intership_onix/ui/bloc/theme_bloc/theme_bloc.dart';
+
+import '../widgets/buttons/outlined_custom_button.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -27,6 +30,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             color: Theme.of(context).secondaryHeaderColor,
           ),
         ),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.done),
@@ -70,6 +74,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }
+              },
+            ),
+            OutlinedCustomButton(
+              title: 'Sign out',
+              onPressed: () {
+                context.read<AuthBloc>().add(SignOut());
+                Navigator.pushReplacementNamed(context, '/auth');
               },
             ),
           ],

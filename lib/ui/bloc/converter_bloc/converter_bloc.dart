@@ -2,34 +2,47 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_intership_onix/data/models/local/converter.dart';
-import 'package:flutter_intership_onix/data/source/local/preferences_management.dart';
+import 'package:flutter_intership_onix/data/remote/response/user_preferences.dart';
+import 'package:flutter_intership_onix/data/repository/data_repository.dart';
 
 part 'converter_event.dart';
 part 'converter_state.dart';
 
 class ConverterBloc extends Bloc<ConverterEvent, ConverterState> {
-  final PreferencesManagement _preferencesManagement = PreferencesManagement();
+  final DataRepository _dataRepository = DataRepository();
+  late String uid;
   Converter converter = Converter(topCardId: 0, bottomCardId: 1);
 
   TextEditingController topCardController = TextEditingController();
   TextEditingController bottomCardController = TextEditingController();
 
   ConverterBloc() : super(ConverterInitial()) {
-    on<ConverterLoadPref>((event, emit) => _loadFromPref(emit));
+    on<ConverterLoadPref>((event, emit) => _loadFromPref(emit, event));
     on<SwitchCards>((event, emit) => _switchCards(emit));
     on<SetCardId>((event, emit) => _setCardId(emit, event.cardIndex, event.id));
     on<SetRates>((event, emit) => _setRates(emit, event.cardIndex, event.rate));
     on<ChangeFormField>((event, emit) =>
         _textFieldOnChanged(emit, event.indexTextFormField, event.value));
-
-    add(ConverterLoadPref());
   }
 
   //load card's id selected by the user
-  void _loadFromPref(Emitter emit) async {
-    converter.topCardId = await _preferencesManagement.getTopCardId() ?? 0;
-    converter.bottomCardId =
-        await _preferencesManagement.getBottomCardId() ?? 1;
+  void _loadFromPref(Emitter emit, ConverterLoadPref event) async {
+    uid = event.uid;
+    UserPreferences? userPreferences =
+        await _dataRepository.getPreferences(uid);
+
+    if (userPreferences == null) {
+      converter.topCardId = 0;
+      converter.bottomCardId = 1;
+      _dataRepository.addPreferences(
+          uid,
+          UserPreferences(
+              topCard: converter.topCardId,
+              bottomCard: converter.bottomCardId));
+    } else {
+      converter.topCardId = userPreferences.topCard;
+      converter.bottomCardId = userPreferences.bottomCard;
+    }
 
     _defaultText();
 
@@ -41,10 +54,15 @@ class ConverterBloc extends Bloc<ConverterEvent, ConverterState> {
     int _bottomCardId = converter.bottomCardId;
 
     _switchRates();
-
     await _setTopCard(_bottomCardId);
     await _setBottomCard(_topCardId);
 
+    _dataRepository.updatePreferences(
+        uid,
+        UserPreferences(
+          topCard: converter.topCardId,
+          bottomCard: converter.bottomCardId,
+        ));
     _convertValue(converter.inputValue ?? 0);
     bottomCardController.text = converter.convertedValue.toStringAsFixed(2);
 
@@ -53,18 +71,22 @@ class ConverterBloc extends Bloc<ConverterEvent, ConverterState> {
 
   void _setCardId(Emitter emit, int cardIndex, int id) {
     cardIndex == 0 ? _setTopCard(id) : _setBottomCard(id);
+    _dataRepository.updatePreferences(
+        uid,
+        UserPreferences(
+          topCard: converter.topCardId,
+          bottomCard: converter.bottomCardId,
+        ));
 
     emit(ConverterLoaded(converter, topCardController, bottomCardController));
   }
 
   Future<void> _setTopCard(int id) async {
-    await _preferencesManagement.setTopCardId(id);
     converter.topCardId = id;
     _convertValue(converter.inputValue ?? 0);
   }
 
   Future<void> _setBottomCard(int id) async {
-    await _preferencesManagement.setBottomCardId(id);
     converter.bottomCardId = id;
     _convertValue(converter.inputValue ?? 0);
   }
