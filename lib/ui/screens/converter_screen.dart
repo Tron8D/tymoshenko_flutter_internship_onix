@@ -5,7 +5,7 @@ import 'package:flutter_intership_onix/data/models/local/currency.dart';
 import 'package:flutter_intership_onix/ui/bloc/converter_bloc/converter_bloc.dart';
 import 'package:flutter_intership_onix/ui/bloc/currencies_list_bloc/currencies_list_bloc.dart';
 import 'package:flutter_intership_onix/ui/widgets/buttons/settings_button.dart';
-import 'package:flutter_intership_onix/ui/widgets/buttons/switch_button.dart';
+import 'package:flutter_intership_onix/ui/widgets/buttons/outlined_custom_button.dart';
 import 'package:flutter_intership_onix/ui/widgets/currency_card.dart';
 import 'package:flutter_intership_onix/ui/widgets/errors/card_error.dart';
 import 'package:flutter_intership_onix/data/models/local/converter.dart';
@@ -27,7 +27,6 @@ class _ConverterScreenState extends State<ConverterScreen>
   late Animation<double> _animationRotateButton;
   late Tween<Offset> topTween;
   late Tween<Offset> bottomTween;
-  late Offset? topOffset;
 
   @override
   void initState() {
@@ -101,9 +100,11 @@ class _ConverterScreenState extends State<ConverterScreen>
               Center(
                 child: FadeTransition(
                   opacity: _animationFadeButton,
-                  child: SwitchButton(onPressed: () {
-                    _onPressed(_animationScreenController);
-                  }),
+                  child: OutlinedCustomButton(
+                      title: 'Switch currencies',
+                      onPressed: () {
+                        _onPressed(_animationScreenController);
+                      }),
                 ),
               ),
               const SizedBox(height: 5),
@@ -124,7 +125,7 @@ class _ConverterScreenState extends State<ConverterScreen>
         .then((value) => context.read<ConverterBloc>().add(SwitchCards()));
   }
 
-  //widget for build cards
+  //function for build cards
   Widget _showCards(
     int cardIndex,
     Converter converter,

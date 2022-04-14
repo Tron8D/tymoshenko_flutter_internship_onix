@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_intership_onix/ui/bloc/currencies_list_bloc/currencies_list_bloc.dart';
 import 'package:flutter_intership_onix/ui/bloc/theme_bloc/theme_bloc.dart';
+
+import '../bloc/converter_bloc/converter_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -17,7 +20,16 @@ class SplashScreen extends StatelessWidget {
           return state is ThemeFirstLoaded;
         },
         listener: (context, state) {
-          Navigator.pushReplacementNamed(context, '/main');
+          User? _currentUser = FirebaseAuth.instance.currentUser;
+
+          if (_currentUser == null) {
+            Navigator.pushReplacementNamed(context, '/auth');
+          } else {
+            context
+                .read<ConverterBloc>()
+                .add(ConverterLoadPref(uid: _currentUser.uid));
+            Navigator.pushReplacementNamed(context, '/main');
+          }
           context.read<ThemeBloc>().add(ThemePrefLoaded());
         },
         child: const Center(child: CircularProgressIndicator()),
