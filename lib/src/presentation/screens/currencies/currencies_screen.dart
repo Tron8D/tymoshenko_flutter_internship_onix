@@ -5,6 +5,7 @@ import 'package:flutter_intership_onix/src/presentation/screens/currencies/bloc/
 import 'package:flutter_intership_onix/src/presentation/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/src/presentation/widgets/currencies_list_view.dart';
 import 'package:flutter_intership_onix/src/presentation/widgets/errors/list_error.dart';
+import 'package:flutter_intership_onix/src/utils/localization/localization.dart';
 
 class CurrenciesScreen extends StatefulWidget {
   const CurrenciesScreen({
@@ -38,7 +39,7 @@ class _CurrenciesScreenState extends State<CurrenciesScreen>
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          'Currencies',
+          lang(context).currenciesScreenTitle,
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
@@ -61,7 +62,7 @@ class _CurrenciesScreenState extends State<CurrenciesScreen>
                     .add(GetCurrenciesList()));
           } else if (state is CurrenciesListLoaded) {
             if (state.currencies.isEmpty) {
-              return const Center(child: Text('List empty.'));
+              return Center(child: Text(lang(context).errEmptyList));
             } else {
               return CurrenciesListView(
                   onTap: (id) {

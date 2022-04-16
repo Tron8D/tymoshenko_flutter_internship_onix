@@ -9,6 +9,7 @@ import 'package:flutter_intership_onix/src/presentation/widgets/buttons/outlined
 import 'package:flutter_intership_onix/src/presentation/widgets/buttons/settings_button.dart';
 import 'package:flutter_intership_onix/src/presentation/widgets/currency_card.dart';
 import 'package:flutter_intership_onix/src/presentation/widgets/errors/card_error.dart';
+import 'package:flutter_intership_onix/src/utils/localization/localization.dart';
 
 class ConverterScreen extends StatefulWidget {
   const ConverterScreen({Key? key}) : super(key: key);
@@ -77,7 +78,7 @@ class _ConverterScreenState extends State<ConverterScreen>
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          'Converter',
+          lang(context).converterScreenTitle,
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
@@ -101,7 +102,7 @@ class _ConverterScreenState extends State<ConverterScreen>
                 child: FadeTransition(
                   opacity: _animationFadeButton,
                   child: OutlinedCustomButton(
-                      title: 'Switch currencies',
+                      title: lang(context).switchButton,
                       onPressed: () {
                         _onPressed(_animationScreenController);
                       }),

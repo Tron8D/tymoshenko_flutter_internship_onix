@@ -4,6 +4,7 @@ abstract class PreferencesManagement {
   final String darkBox = 'dark';
   final String updateTimeBox = '_update_time';
   final String updateIntervalBox = '_update_interval';
+  final String languageCodeBox = 'language_code';
 
   //Load and parse preferences from disk
   Future<SharedPreferences> getUserPref();
@@ -22,6 +23,11 @@ abstract class PreferencesManagement {
   Future<void> setUpdateInterval(String updateInterval);
 
   Future<String?> getUpdateInterval();
+
+  //language preference control
+  Future<void> setLanguageCode(String languageCode);
+
+  Future<String?> getLanguageCode();
 
   //Clear preferences
   Future<void> clearPref();

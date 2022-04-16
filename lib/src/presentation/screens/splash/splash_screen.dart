@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_intership_onix/src/presentation/bloc/theme_bloc/theme_bloc.dart';
 import 'package:flutter_intership_onix/src/presentation/screens/converter/bloc/converter_bloc.dart';
+// import 'package:flutter_intership_onix/src/presentation/screens/currencies/bloc/currencies_list_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_intership_onix/src/presentation/screens/currencies/bloc/currencies_list_bloc.dart';
+import 'package:flutter_intership_onix/src/utils/localization/localization.dart';
 
 class CurrencyInfoScreen extends StatelessWidget {
   const CurrencyInfoScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class CurrencyInfoScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
-          'Currency info',
+          lang(context).infoScreenTitle,
           style: TextStyle(color: Theme.of(context).secondaryHeaderColor),
         ),
         centerTitle: true,
@@ -45,8 +46,8 @@ class CurrencyInfoScreen extends StatelessWidget {
                     Text(state.currencyFromId.name),
                     Text(state.currencyFromId.fullName),
                     Text(state.currencyFromId.symbol),
-                    Text(
-                        'Rate : ${state.currencyFromId.rateToUah.toString()} UAH'),
+                    Text(lang(context).rate +
+                        '${state.currencyFromId.rateToUah.toString()} UAH'),
                   ],
                 );
               } else {

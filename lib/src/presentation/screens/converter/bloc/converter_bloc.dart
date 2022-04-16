@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:flutter_intership_onix/src/data/remote/user_preferences.dart';
 import 'package:flutter_intership_onix/src/domain/entity/converter.dart';
 import 'package:flutter_intership_onix/src/domain/use_case/user_preferences/add_user_preferences_use_case.dart';
 import 'package:flutter_intership_onix/src/domain/use_case/user_preferences/get_user_preferences_use_case.dart';
 import 'package:flutter_intership_onix/src/domain/use_case/user_preferences/update_user_preferences_use_case.dart';
-import 'package:get_it/get_it.dart';
 
 part 'converter_event.dart';
 part 'converter_state.dart';

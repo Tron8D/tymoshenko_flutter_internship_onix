@@ -6,6 +6,7 @@ import 'package:flutter_intership_onix/src/presentation/screens/auth/bloc/auth_b
 import 'package:flutter_intership_onix/src/presentation/screens/converter/bloc/converter_bloc.dart';
 
 import 'package:flutter_intership_onix/src/presentation/widgets/buttons/outlined_custom_button.dart';
+import 'package:flutter_intership_onix/src/utils/localization/localization.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _AuthScreenState extends State<AuthScreen>
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 3000));
     cardTween = Tween<Offset>(begin: const Offset(-1.1, 0), end: Offset.zero);
-    buttonTween = Tween<Offset>(begin: const Offset(3, 0), end: Offset.zero);
+    buttonTween = Tween<Offset>(begin: const Offset(4, 0), end: Offset.zero);
 
     _animationMoveCard = cardTween.animate(CurvedAnimation(
         parent: _animationController, curve: Curves.elasticInOut))
@@ -46,9 +47,9 @@ class _AuthScreenState extends State<AuthScreen>
         parent: _animationController, curve: Curves.elasticInOut))
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          buttonTween.begin = const Offset(-3, 0);
+          buttonTween.begin = const Offset(-4, 0);
         } else if (status == AnimationStatus.dismissed) {
-          buttonTween.begin = const Offset(3, 0);
+          buttonTween.begin = const Offset(4, 0);
         }
       });
   }
@@ -79,14 +80,14 @@ class _AuthScreenState extends State<AuthScreen>
         String _buttonTitle;
         String _errorMassage = '';
         if (state is AuthInitial) {
-          _buttonTitle = 'Login/Registration';
+          _buttonTitle = lang(context).authButton;
         } else if (state is AuthError) {
           _errorMassage = state.errorMassage;
-          _buttonTitle = 'Login/Registration';
+          _buttonTitle = lang(context).authButton;
         } else if (state is AuthDone) {
-          _buttonTitle = 'Success';
+          _buttonTitle = lang(context).authDoneButton;
         } else {
-          _buttonTitle = 'Waiting...';
+          _buttonTitle = lang(context).authLoadingButton;
         }
         return Scaffold(
           body: Center(
@@ -112,7 +113,7 @@ class _AuthScreenState extends State<AuthScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Welcome!',
+                                lang(context).greetings,
                                 style: TextStyle(
                                     fontSize: 25,
                                     color:
@@ -121,8 +122,8 @@ class _AuthScreenState extends State<AuthScreen>
                               TextFormField(
                                 controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
-                                decoration:
-                                    const InputDecoration(hintText: 'Email'),
+                                decoration: InputDecoration(
+                                    hintText: lang(context).emailField),
                                 style: TextStyle(
                                     fontSize: 25,
                                     color:
@@ -130,7 +131,7 @@ class _AuthScreenState extends State<AuthScreen>
                                 textAlign: TextAlign.center,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Enter Email';
+                                    return lang(context).errEmailField;
                                   }
                                   return null;
                                 },
@@ -138,8 +139,8 @@ class _AuthScreenState extends State<AuthScreen>
                               TextFormField(
                                 controller: _passwordController,
                                 keyboardType: TextInputType.text,
-                                decoration:
-                                    const InputDecoration(hintText: 'Password'),
+                                decoration: InputDecoration(
+                                    hintText: lang(context).passwordField),
                                 style: TextStyle(
                                     fontSize: 25,
                                     color:
@@ -147,9 +148,10 @@ class _AuthScreenState extends State<AuthScreen>
                                 textAlign: TextAlign.center,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Enter Password';
+                                    return lang(context).errEmptyPasswordField;
                                   } else if (value.length < 6) {
-                                    return 'Password minimum length 6 characters';
+                                    return lang(context)
+                                        .errSecurityPasswordField;
                                   }
                                   return null;
                                 },
