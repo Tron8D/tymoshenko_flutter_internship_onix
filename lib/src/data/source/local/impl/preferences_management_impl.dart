@@ -52,6 +52,18 @@ class PreferencesManagementImpl extends PreferencesManagement {
   }
 
   @override
+  Future<void> setLanguageCode(String languageCode) async {
+    SharedPreferences _preferences = await getUserPref();
+    _preferences.setString(languageCodeBox, languageCode);
+  }
+
+  @override
+  Future<String?> getLanguageCode() async {
+    SharedPreferences _preferences = await getUserPref();
+    return _preferences.getString(languageCodeBox);
+  }
+
+  @override
   Future<void> clearPref() async {
     SharedPreferences _preferences = await getUserPref();
     await _preferences.clear();

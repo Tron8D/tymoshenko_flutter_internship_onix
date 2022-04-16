@@ -1,8 +1,10 @@
+import 'package:get_it/get_it.dart';
+
 import 'package:flutter_intership_onix/src/domain/use_case/clear_preferences_use_case.dart';
 import 'package:flutter_intership_onix/src/domain/use_case/currencies_list/get_update_interval_use_case.dart';
 import 'package:flutter_intership_onix/src/domain/use_case/currencies_list/set_update_interval_use_case.dart';
-import 'package:get_it/get_it.dart';
-
+import 'package:flutter_intership_onix/src/domain/use_case/language/get_language_code_use_case.dart';
+import 'package:flutter_intership_onix/src/domain/use_case/language/set_language_code_use_case.dart';
 import 'package:flutter_intership_onix/src/data/repository/currencies_repository_impl.dart';
 import 'package:flutter_intership_onix/src/data/source/local/currency_hive_source.dart';
 import 'package:flutter_intership_onix/src/data/source/local/impl/currency_hive_source_impl.dart';
@@ -42,8 +44,12 @@ void setUpServiceLocator() {
       () => GetUpdateTimeUseCase(getIt<PreferencesManagement>()));
   getIt.registerLazySingleton<GetUpdateIntervalUseCase>(
       () => GetUpdateIntervalUseCase(getIt<PreferencesManagement>()));
+  getIt.registerLazySingleton<GetLanguageCodeUseCase>(
+      () => GetLanguageCodeUseCase(getIt<PreferencesManagement>()));
   getIt.registerLazySingleton<SetUpdateTimeUseCase>(
       () => SetUpdateTimeUseCase(getIt<PreferencesManagement>()));
+  getIt.registerLazySingleton<SetLanguageCodeUseCase>(
+      () => SetLanguageCodeUseCase(getIt<PreferencesManagement>()));
   getIt.registerLazySingleton<SetUpdateIntervalUseCase>(
       () => SetUpdateIntervalUseCase(getIt<PreferencesManagement>()));
   getIt.registerLazySingleton<GetThemeUseCase>(

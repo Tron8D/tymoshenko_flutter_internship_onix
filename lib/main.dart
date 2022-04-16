@@ -9,8 +9,10 @@ import 'package:flutter_intership_onix/src/presentation/bloc/theme_bloc/theme_bl
 import 'package:flutter_intership_onix/src/presentation/screens/auth/bloc/auth_bloc.dart';
 import 'package:flutter_intership_onix/src/presentation/screens/converter/bloc/converter_bloc.dart';
 import 'package:flutter_intership_onix/src/presentation/screens/currencies/bloc/currencies_list_bloc.dart';
+import 'package:flutter_intership_onix/src/presentation/bloc/language/language_cubit.dart';
 
 import 'package:flutter_intership_onix/routes.dart';
+import 'package:flutter_gen/gen_l10n/converter_app_localizations.dart';
 
 import 'firebase_options.dart';
 
@@ -20,11 +22,11 @@ void main() async {
   setUpServiceLocator();
   await Hive.initFlutter();
   Hive.registerAdapter(CurrencyHiveModelAdapter());
-  runApp(const MyApp());
+  runApp(const ConverterApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ConverterApp extends StatelessWidget {
+  const ConverterApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -40,19 +42,38 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (BuildContext context) => ThemeBloc()),
         BlocProvider(create: (BuildContext context) => AuthBloc()),
+        BlocProvider(create: (context) => LanguageCubit()),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (context, state) {
-          return MaterialApp(
-            title: 'Flutter lesson 13',
-            debugShowCheckedModeBanner: false,
-            theme: context.read<ThemeBloc>().lightTheme,
-            darkTheme: context.read<ThemeBloc>().darkTheme,
-            themeMode: context.read<ThemeBloc>().isDark
-                ? ThemeMode.dark
-                : ThemeMode.light,
-            initialRoute: "/",
-            routes: routes,
+          context.read<LanguageCubit>().loadPref();
+          return BlocBuilder<LanguageCubit, LanguageState>(
+            builder: (context, state) {
+              return MaterialApp(
+                title: 'Flutter lesson 14',
+                debugShowCheckedModeBanner: false,
+                theme: context.read<ThemeBloc>().lightTheme,
+                darkTheme: context.read<ThemeBloc>().darkTheme,
+                themeMode: context.read<ThemeBloc>().isDark
+                    ? ThemeMode.dark
+                    : ThemeMode.light,
+                initialRoute: "/",
+                routes: routes,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                localeResolutionCallback: (locale, supportedLocales) {
+                  return supportedLocales
+                          .where(
+                              (l) => (l.languageCode == locale?.languageCode))
+                          .isNotEmpty
+                      ? locale
+                      : const Locale('en');
+                },
+                supportedLocales: AppLocalizations.supportedLocales,
+                locale: state.languageCode != null
+                    ? Locale(state.languageCode!)
+                    : null,
+              );
+            },
           );
         },
       ),
