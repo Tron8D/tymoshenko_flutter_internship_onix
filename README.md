@@ -1,4 +1,4 @@
-# flutter_intership_onix
+# flutter_internship_onix
 
 A new Flutter project.
 
